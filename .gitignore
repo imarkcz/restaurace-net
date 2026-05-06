@@ -1,0 +1,28 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Dependencies (pokud bychom někdy přidali build step)
+node_modules/
+
+# Build / deploy artefakty
+dist/
+.vercel/
+.netlify/
+
+# Logy
+*.log
+npm-debug.log*
+yarn-debug.log*
+
+# Lokální .env
+.env
+.env.local
+.env*.local
