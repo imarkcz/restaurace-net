@@ -53,7 +53,7 @@
           muted
           loop
           playsinline
-          preload="metadata"
+          preload="auto"
           disablepictureinpicture
           aria-hidden="true">
           <source src="images/hero.webm" type="video/webm" />
@@ -732,16 +732,26 @@
     const text   = `${dny[dnes.getDay()]} ${dnes.getDate()}. ${mesice[dnes.getMonth()]} ${dnes.getFullYear()}`;
     document.getElementById('todayDate').textContent = text;
 
-    // ─── Hero video: slow-cinema feel + fade-in po načtení ──────────────────
+    // ─── Hero video: slow-cinema feel + bulletproof fade-in ─────────────────
     const heroVideo = document.getElementById('heroVideo');
     if (heroVideo) {
       // Premium "slow cinema" — 80 % původní rychlosti pro éterický pocit
       heroVideo.playbackRate = 0.8;
 
-      // Fade-in když jsou data dostupná (žádný flash černého plátna)
-      heroVideo.addEventListener('loadeddata', () => {
-        heroVideo.classList.add('is-ready');
-      }, { once: true });
+      // Fade-in: poslouchám více eventů + timeout fallback (různé browsery
+      // emitují různé eventy v různém pořadí, takže triple-redundance)
+      const showVideo = () => heroVideo.classList.add('is-ready');
+      heroVideo.addEventListener('canplay',    showVideo, { once: true });
+      heroVideo.addEventListener('playing',    showVideo, { once: true });
+      heroVideo.addEventListener('loadeddata', showVideo, { once: true });
+      // Fallback — pokud se žádný event nespustí (cached video), 1,5s safety
+      setTimeout(showVideo, 1500);
+      // Pokud už je video připravené v okamžiku spuštění JS
+      if (heroVideo.readyState >= 3) showVideo();
+
+      // Force play attempt — autoplay může selhat na iOS bez user gesture;
+      // .play() vrací promise, kterou bezpečně spolkneme
+      heroVideo.play().catch(() => {});
 
       // Pauza při skrytém tabu — šetří CPU/baterii
       document.addEventListener('visibilitychange', () => {
