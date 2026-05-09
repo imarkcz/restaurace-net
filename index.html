@@ -735,8 +735,9 @@
     // ─── Hero video: slow-cinema feel + bulletproof fade-in ─────────────────
     const heroVideo = document.getElementById('heroVideo');
     if (heroVideo) {
-      // Premium "slow cinema" — 80 % původní rychlosti pro éterický pocit
-      heroVideo.playbackRate = 0.8;
+      // Slow-mo je natívně zapečené ve videu (motion-interpolated 60 %).
+      // Necháváme 1.0× playback aby se nezdvojovala zpomalení.
+      heroVideo.playbackRate = 1.0;
 
       // Fade-in: poslouchám více eventů + timeout fallback (různé browsery
       // emitují různé eventy v různém pořadí, takže triple-redundance)
