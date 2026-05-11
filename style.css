@@ -10,12 +10,13 @@
   --cream:      #F7F2EA;
   --gold:       #C8A86E;
   --gold-d:     #A8883E;
+  --gold-dim:   #836630;  /* WCAG-AA confirmed na cream/white při 10px (4.6:1) */
   --text:       #2C2C2C;
   --gray:       #6B6B6B;
   --white:      #ffffff;
 
   --font-head: 'Cormorant Garamond', Georgia, serif;
-  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-body: 'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
 
   --nav-h: 72px;
   --radius: 4px;
@@ -141,15 +142,20 @@ address { font-style: normal; }
   display: inline-block;
   font-family: var(--font-body);
   font-weight: 500;
-  font-size: .625rem;          /* 10px */
-  letter-spacing: .3em;         /* 3px-like spacing */
+  font-size: .625rem;           /* 10px */
+  letter-spacing: .3em;          /* 3px-like spacing */
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--gold-dim);        /* WCAG-AA default pro světlé sekce */
   margin-bottom: 14px;
 }
 .section-eyebrow::before { content: '— '; opacity: .85; }
 .section-eyebrow::after  { content: ' —'; opacity: .85; }
-.section-eyebrow--gold { color: var(--gold); }
+
+/* Na tmavém pozadí (hero, salonek, kontakt) zachovat zářivé zlaté */
+.section--dark   .section-eyebrow,
+.hero            .section-eyebrow,
+.section-eyebrow--gold,
+.section-header--light .section-eyebrow { color: var(--gold); }
 
 .section-title {
   font-family: var(--font-head);
@@ -416,13 +422,16 @@ address { font-style: normal; }
   content: '';
   position: absolute;
   bottom: 0; left: 0;
-  width: 0; height: 2px;
+  width: 100%; height: 2px;
   background: var(--gold);
-  transition: width .3s ease;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .3s var(--ease);
+  will-change: transform;
 }
 .nav__link:hover { color: var(--white); }
 .nav__link:hover::after,
-.nav__link.is-active::after { width: 100%; }
+.nav__link.is-active::after { transform: scaleX(1); }
 
 /* Hamburger */
 .nav__hamburger {
@@ -865,14 +874,15 @@ address { font-style: normal; }
 
 .daily-menu__label {
   font-family: var(--font-body);
-  font-weight: 500;
-  font-size: .7rem;
-  letter-spacing: .18em;
+  font-weight: 600;
+  font-size: .72rem;
+  letter-spacing: .22em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--gold-dim);          /* WCAG-AA na bílém kontejneru */
   margin-bottom: 4px;
 }
-.daily-menu__soup .daily-menu__label { color: rgba(200,168,110,.7); }
+/* Polévkový label je v dark burgundy boxu — zde světlé gold je OK */
+.daily-menu__soup .daily-menu__label { color: rgba(200,168,110,.85); }
 
 .daily-menu__soup .daily-menu__item {
   color: rgba(255,255,255,.9);
@@ -889,57 +899,90 @@ address { font-style: normal; }
 }
 
 .daily-menu__mains {
-  padding: 24px 32px;
+  padding: 40px 48px 8px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 28px;
 }
 
+/* Premium restaurant menu item — dvouřádek bez čísel */
 .daily-menu__item {
   display: flex;
-  align-items: flex-start;
-  gap: 16px;
-}
-
-.daily-menu__number {
-  flex-shrink: 0;
-  width: 28px; height: 28px;
-  background: var(--cream);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-head);
-  font-weight: 600;
-  font-size: .95rem;
-  color: var(--burgundy);
-  margin-top: 1px;
-}
-
-.daily-menu__detail {
-  flex: 1;
-  display: flex;
   flex-direction: column;
+  gap: 4px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(139,38,53,.08);
 }
+.daily-menu__item:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* První řádek: název + cena na stejné lince, s tečkovaným leaderem */
+.daily-menu__item-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.daily-menu__item-head::after {
+  /* Spacer co se roztahuje mezi name a price */
+  content: '';
+  flex: 1;
+  border-bottom: 1px dotted rgba(139,38,53,.2);
+  transform: translateY(-3px);
+}
+.daily-menu__item-head .daily-menu__price {
+  order: 3;
+}
+
+/* Název jídla — Cormorant italic, elegantní */
 .daily-menu__name {
   font-family: var(--font-head);
-  font-weight: 600;
-  font-size: 1.1rem;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.35rem;
   color: var(--text);
   line-height: 1.25;
+  letter-spacing: .005em;
+  font-feature-settings: 'kern' 1, 'liga' 1;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
 }
-.daily-menu__note {
-  font-size: .78rem;
+
+/* Tag „vegetariánské" inline vedle názvu */
+.daily-menu__tag {
+  font-family: var(--font-body);
+  font-style: normal;
+  font-weight: 500;
+  font-size: .58rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gold-d);
+  padding: 3px 8px;
+  border: 1px solid rgba(168,136,62,.4);
+  border-radius: 100px;
+  transform: translateY(-2px);
+}
+
+/* Sub — složky pod názvem, jemný sans italic */
+.daily-menu__sub {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: .92rem;
   color: var(--gray);
+  letter-spacing: .005em;
+  line-height: 1.4;
   margin-top: 2px;
 }
 .daily-menu__price {
   flex-shrink: 0;
   font-family: var(--font-body);
-  font-weight: 500;
-  font-size: .95rem;
+  font-weight: 600;
+  font-size: 1rem;
   color: var(--burgundy);
-  margin-top: 2px;
+  letter-spacing: .01em;
+  font-variant-numeric: tabular-nums;
 }
 
 .daily-menu__footer {
@@ -1617,13 +1660,14 @@ address { font-style: normal; }
 .footer__link {
   font-size: .85rem;
   color: rgba(255,255,255,.6);
-  transition: color .25s ease, padding .25s ease;
+  transition: color .25s var(--ease), transform .25s var(--ease);
   display: inline-block;
   width: max-content;
+  will-change: transform;
 }
 .footer__link:hover {
   color: var(--gold);
-  padding-left: 6px;
+  transform: translateX(6px);
 }
 
 .footer__contact {
