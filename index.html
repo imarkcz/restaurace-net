@@ -5,396 +5,209 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Restaurant NET — Uherské Hradiště</title>
   <meta name="description" content="Restaurace v centru Uherského Hradiště. Polední menu, rodinné oslavy, salónek pro 60 osob. Otevřeno Po–Pá 9:30–23:00." />
+  <meta name="theme-color" content="#F5EFE4" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23211B12'/%3E%3Ccircle cx='32' cy='32' r='13' fill='%23F5EFE4'/%3E%3Ccircle cx='32' cy='32' r='6' fill='%23BC4A22'/%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Gloock&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- ═══════════════════════════════════════════
-       NAVIGACE
-  ═══════════════════════════════════════════ -->
+  <!-- ═══ NAVIGACE ═══ -->
   <header class="nav" id="nav">
     <div class="nav__inner">
-      <a href="#hero" class="nav__logo">
-        <span class="nav__logo-text">Restaurant <strong>NET</strong></span>
-        <span class="nav__logo-sub">Uherské Hradiště</span>
-      </a>
+      <a href="#uvod" class="nav__logo">Restaurant&nbsp;<strong>NET</strong></a>
 
-      <nav class="nav__links" id="navLinks">
+      <nav class="nav__links" id="navLinks" aria-label="Hlavní navigace">
+        <a href="#denni-menu" class="nav__link">Dnešní menu</a>
+        <a href="#oslavy" class="nav__link">Salónek</a>
         <a href="#jidelni-listek" class="nav__link">Jídelní lístek</a>
-        <a href="#oslavy" class="nav__link">Oslavy</a>
         <a href="#o-nas" class="nav__link">O nás</a>
         <a href="#kontakt" class="nav__link">Kontakt</a>
-        <a href="#kontakt" class="btn btn--nav">Rezervovat</a>
+        <a href="tel:+420572552597" class="btn btn--pill btn--ink nav__cta">572 552 597</a>
       </nav>
 
       <button class="nav__hamburger" id="hamburger" aria-label="Otevřít menu" aria-expanded="false">
-        <span></span>
-        <span></span>
-        <span></span>
+        <span></span><span></span>
       </button>
     </div>
   </header>
 
   <main>
 
-    <!-- ═══════════════════════════════════════════
-         HERO
-    ═══════════════════════════════════════════ -->
-    <section class="hero" id="hero">
-      <div class="hero__photo">
-        <!-- WebM (VP9) první — Chrome/Firefox/Edge; MP4 fallback pro Safari -->
-        <video
-          id="heroVideo"
-          poster="images/salonek.webp"
-          autoplay
-          muted
-          loop
-          playsinline
-          preload="auto"
-          disablepictureinpicture
-          aria-hidden="true">
-          <source src="images/hero.webm" type="video/webm" />
-          <source src="images/hero.mp4"  type="video/mp4" />
-        </video>
-      </div>
-      <div class="hero__overlay"></div>
-      <div class="hero__content">
-        <p class="hero__pretitle">Restaurant NET · Uherské Hradiště</p>
-        <span class="hero__divider" aria-hidden="true"></span>
+    <!-- ═══ HERO ═══ -->
+    <section class="hero" id="uvod">
+      <div class="container">
+        <div class="hero__meta reveal">
+          <span>Rodinná restaurace</span>
+          <span aria-hidden="true">●</span>
+          <span>Uherské Hradiště</span>
+          <span aria-hidden="true">●</span>
+          <span>denně od 9:30</span>
+        </div>
+
         <h1 class="hero__headline">
-          <span class="hero__headline-line1">Poctivá kuchyně</span>
-          <span class="hero__headline-line2">v srdci Uherského Hradiště</span>
+          <span class="mask"><span class="line">Poctivá kuchyně</span></span>
+          <span class="mask"><span class="line line--accent">v srdci Hradiště</span></span>
         </h1>
-        <p class="hero__sub">Polední menu, rodinné oslavy a salónek až pro 60 hostů.</p>
-        <div class="hero__ctas">
-          <a href="#denni-menu" class="btn btn--primary">Dnešní menu</a>
-          <a href="#kontakt" class="btn btn--outline">Rezervovat stůl</a>
-        </div>
-        <div class="hero__trust">
-          <span class="trust-item">
-            <svg class="trust-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.5 7.1.6-5.4 4.7 1.7 7L12 17.1 5.7 20.8l1.7-7L2 9.1l7.1-.6z"/></svg>
-            4,2 Google hodnocení
-          </span>
-          <span class="trust-sep" aria-hidden="true"></span>
-          <span class="trust-item">
-            <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-            Otevřeno 9:30–23:00
-          </span>
-          <span class="trust-sep" aria-hidden="true"></span>
-          <span class="trust-item">
-            <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg>
-            Stravenky
-          </span>
+
+        <div class="hero__row">
+          <p class="hero__sub reveal">Polední menu každý všední den, večery beze spěchu
+          a salónek až pro šedesát hostů. Pár kroků od Mariánského náměstí.</p>
+          <div class="hero__ctas reveal">
+            <a href="#denni-menu" class="btn btn--pill btn--ink" data-magnetic>Dnešní menu</a>
+            <a href="#oslavy" class="btn btn--pill btn--line" data-magnetic>Rezervovat salónek</a>
+          </div>
         </div>
       </div>
-      <div class="hero__scroll-hint" aria-hidden="true">
-        <span></span>
-      </div>
-    </section>
 
-    <!-- ═══════════════════════════════════════════
-         DENNÍ MENU
-    ═══════════════════════════════════════════ -->
-    <section class="section section--cream" id="denni-menu">
-      <div class="container">
-        <div class="section-header reveal">
-          <p class="section-eyebrow">každý den čerstvě</p>
-          <h2 class="section-title">Polední menu</h2>
-          <div class="menu-date">
-            <span id="todayDate" class="menu-date__text"></span>
-            <span class="badge">Platí dnes</span>
-          </div>
-        </div>
-
-        <!-- Týdenní menu — přepínání po dnech -->
-        <div class="weekly-menu reveal" id="weeklyMenu">
-          <div class="weekly-menu__tabs" role="tablist">
-            <button class="weekly-menu__tab" data-day="3" role="tab">
-              <span class="weekly-menu__tab-name">Středa</span>
-              <span class="weekly-menu__tab-date">6.5.</span>
-            </button>
-            <button class="weekly-menu__tab" data-day="4" role="tab">
-              <span class="weekly-menu__tab-name">Čtvrtek</span>
-              <span class="weekly-menu__tab-date">7.5.</span>
-            </button>
-            <button class="weekly-menu__tab weekly-menu__tab--closed" data-day="5" role="tab">
-              <span class="weekly-menu__tab-name">Pátek</span>
-              <span class="weekly-menu__tab-date">8.5.</span>
-            </button>
-            <button class="weekly-menu__tab" data-day="6" role="tab">
-              <span class="weekly-menu__tab-name">Sobota</span>
-              <span class="weekly-menu__tab-date">9.5.</span>
-            </button>
-            <button class="weekly-menu__tab weekly-menu__tab--closed" data-day="0" role="tab">
-              <span class="weekly-menu__tab-name">Neděle</span>
-              <span class="weekly-menu__tab-date">10.5.</span>
-            </button>
-          </div>
-
-          <!-- ═══ STŘEDA ═══ -->
-          <div class="daily-menu weekly-menu__panel" data-day="3">
-            <div class="daily-menu__soup">
-              <div class="daily-menu__label">Polévka (na výběr)</div>
-              <div class="daily-menu__item">
-                <span class="daily-menu__name">Indická s masem · Gulášová · Vývar s nudlemi · Česneková</span>
-                <span class="daily-menu__price">v ceně menu</span>
-              </div>
-            </div>
-            <div class="daily-menu__mains">
-              <div class="daily-menu__label">Hlavní jídla</div>
-              <div class="daily-menu__item">
-                <div class="daily-menu__item-head"><span class="daily-menu__name">Kuřecí Kung Pao</span><span class="daily-menu__price">150 Kč</span></div>
-                <span class="daily-menu__sub">dušená rýže nebo hranolky</span>
-              </div>
-              <div class="daily-menu__item">
-                <div class="daily-menu__item-head"><span class="daily-menu__name">Medailonky z vepřové panenky</span><span class="daily-menu__price">150 Kč</span></div>
-                <span class="daily-menu__sub">s parmskou šunkou, opékané brambory</span>
-              </div>
-              <div class="daily-menu__item">
-                <div class="daily-menu__item-head"><span class="daily-menu__name">Hovězí vařené</span><span class="daily-menu__price">150 Kč</span></div>
-                <span class="daily-menu__sub">játrová omáčka, kynutý knedlík</span>
-              </div>
-              <div class="daily-menu__item">
-                <div class="daily-menu__item-head"><span class="daily-menu__name">Srbské vepřové rizoto</span><span class="daily-menu__price">150 Kč</span></div>
-                <span class="daily-menu__sub">se sýrem, okurkový salát</span>
-              </div>
-              <div class="daily-menu__item">
-                <div class="daily-menu__item-head"><span class="daily-menu__name">Kapustové lívance <span class="daily-menu__tag">vegetariánské</span></span><span class="daily-menu__price">150 Kč</span></div>
-                <span class="daily-menu__sub">vařené brambory, dip</span>
-              </div>
-              <div class="daily-menu__item">
-                <div class="daily-menu__item-head"><span class="daily-menu__name">Sekaná pečeně</span><span class="daily-menu__price">150 Kč</span></div>
-                <span class="daily-menu__sub">bramborová kaše, okurek</span>
-              </div>
-              <div class="daily-menu__item">
-                <div class="daily-menu__item-head"><span class="daily-menu__name">Smažené kuřecí řízečky</span><span class="daily-menu__price">150 Kč</span></div>
-                <span class="daily-menu__sub">šťouchané brambory</span>
-              </div>
-              <div class="daily-menu__item">
-                <div class="daily-menu__item-head"><span class="daily-menu__name">Smažený sýr se šunkou</span><span class="daily-menu__price">150 Kč</span></div>
-                <span class="daily-menu__sub">brambory nebo hranolky</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- ═══ ČTVRTEK ═══ -->
-          <div class="daily-menu weekly-menu__panel" data-day="4">
-            <div class="daily-menu__soup">
-              <div class="daily-menu__label">Polévka (na výběr)</div>
-              <div class="daily-menu__item">
-                <span class="daily-menu__name">Kyselica · Gulášová · Vývar s nudlemi · Česneková</span>
-                <span class="daily-menu__price">v ceně menu</span>
-              </div>
-            </div>
-            <div class="daily-menu__mains">
-              <div class="daily-menu__label">Hlavní jídla</div>
-              <div class="daily-menu__item">
-                <div class="daily-menu__item-head"><span class="daily-menu__name">Smažené kuřecí nitky</span><span class="daily-menu__price">150 Kč</span></div>
-                <span class="daily-menu__sub">šťouchané brambory</span>
-              </div>
-              <div class="daily-menu__item">
-                <div class="daily-menu__item-head"><span class="daily-menu__name">Středoevropská kuřecí směs</span><span class="daily-menu__price">150 Kč</span></div>
-                <span class="daily-menu__sub">dušená rýže</span>
-              </div>
-              <div class="daily-menu__item">
-                <div class="daily-menu__item-head"><span class="daily-menu__name">Svíčková na smetaně</span><span class="daily-menu__price">160 Kč</span></div>
-                <span class="daily-menu__sub">houskový knedlík, brusinky</span>
-              </div>
-              <div class="daily-menu__item">
-                <div class="daily-menu__item-head"><span class="daily-menu__name">Italské vepřové ragú</span><span class="daily-menu__price">150 Kč</span></div>
-                <span class="daily-menu__sub">těstoviny</span>
-              </div>
-              <div class="daily-menu__item">
-                <div class="daily-menu__item-head"><span class="daily-menu__name">Husí játra na slanině</span><span class="daily-menu__price">150 Kč</span></div>
-                <span class="daily-menu__sub">opékané brambory</span>
-              </div>
-              <div class="daily-menu__item">
-                <div class="daily-menu__item-head"><span class="daily-menu__name">Široké nudle</span><span class="daily-menu__price">130 Kč</span></div>
-                <span class="daily-menu__sub">se zelím a slaninou</span>
-              </div>
-              <div class="daily-menu__item">
-                <div class="daily-menu__item-head"><span class="daily-menu__name">Smažený sýr</span><span class="daily-menu__price">150 Kč</span></div>
-                <span class="daily-menu__sub">brambory nebo hranolky, tatarská omáčka</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- ═══ PÁTEK — ZAVŘENO ═══ -->
-          <div class="daily-menu daily-menu--closed weekly-menu__panel" data-day="5">
-            <div class="daily-menu__closed">
-              <div class="daily-menu__closed-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
-              </div>
-              <h3 class="daily-menu__closed-title">Pátek 8.5. — zavřeno</h3>
-              <p class="daily-menu__closed-text">Rádi Vás uvítáme v naší partnerské restauraci<br /><strong>Saláška Staré Město</strong>.</p>
-            </div>
-          </div>
-
-          <!-- ═══ SOBOTA ═══ -->
-          <div class="daily-menu weekly-menu__panel" data-day="6">
-            <div class="daily-menu__soup">
-              <div class="daily-menu__label">Polévka</div>
-              <div class="daily-menu__item">
-                <span class="daily-menu__name">Slepičí vývar s masem a nudlemi</span>
-                <span class="daily-menu__price">v ceně menu</span>
-              </div>
-            </div>
-            <div class="daily-menu__mains">
-              <div class="daily-menu__label">Víkendová nabídka</div>
-              <div class="daily-menu__item">
-                <div class="daily-menu__item-head"><span class="daily-menu__name">Pečený losos</span><span class="daily-menu__price">210 Kč</span></div>
-                <span class="daily-menu__sub">bazalkové pesto, vařené brambory</span>
-              </div>
-              <div class="daily-menu__item">
-                <div class="daily-menu__item-head"><span class="daily-menu__name">Kuřecí směs s grilovanou zeleninou</span><span class="daily-menu__price">185 Kč</span></div>
-                <span class="daily-menu__sub">dušená rýže</span>
-              </div>
-              <div class="daily-menu__item">
-                <div class="daily-menu__item-head"><span class="daily-menu__name">Smažené kuřecí řízečky</span><span class="daily-menu__price">185 Kč</span></div>
-                <span class="daily-menu__sub">šťouchané brambory</span>
-              </div>
-              <div class="daily-menu__item">
-                <div class="daily-menu__item-head"><span class="daily-menu__name">Vepřová panenka</span><span class="daily-menu__price">210 Kč</span></div>
-                <span class="daily-menu__sub">demi-glace, gratinované brambory</span>
-              </div>
-              <div class="daily-menu__item">
-                <div class="daily-menu__item-head"><span class="daily-menu__name">Svíčková na smetaně</span><span class="daily-menu__price">210 Kč</span></div>
-                <span class="daily-menu__sub">houskový knedlík, brusinky</span>
-              </div>
-              <div class="daily-menu__item">
-                <div class="daily-menu__item-head"><span class="daily-menu__name">Pečená kachna</span><span class="daily-menu__price">210 Kč</span></div>
-                <span class="daily-menu__sub">dušené zelí, bramborový knedlík</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- ═══ NEDĚLE — ZAVŘENO ═══ -->
-          <div class="daily-menu daily-menu--closed weekly-menu__panel" data-day="0">
-            <div class="daily-menu__closed">
-              <div class="daily-menu__closed-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21c0-9 5-14 16-14-1 9-7 14-16 14"/><path d="M5 21l9-9"/></svg>
-              </div>
-              <h3 class="daily-menu__closed-title">Neděle 10.5. — zavřeno</h3>
-              <p class="daily-menu__closed-text">Otevřeno pouze pro předem domluvené akce.<br />Rezervace na <a href="tel:+420572552597" style="color:var(--burgundy);text-decoration:underline;">572 552 597</a>.</p>
-            </div>
-          </div>
-
-          <div class="daily-menu__footer">
-            <p class="daily-menu__note-global">Menu se mění každý den — aktuální také na <a href="https://www.menicka.cz/123-restaurant-net-.html" target="_blank" rel="noopener" style="color:var(--burgundy);text-decoration:underline;">menicka.cz</a> a <strong>Facebooku</strong></p>
-            <a href="tel:+420572552597" class="btn btn--primary">
-              <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4l3 0 2 5-2.5 1.5a11 11 0 005 5L14 13l5 2 0 3a2 2 0 01-2 2A16 16 0 014 7a2 2 0 012-2"/></svg>
-              Rezervovat oběd: 572 552 597
-            </a>
-          </div>
+      <div class="hero__media" id="heroMedia">
+        <div class="hero__media-clip" id="heroClip">
+          <video
+            id="heroVideo"
+            poster="images/salonek.webp"
+            autoplay muted loop playsinline preload="auto"
+            disablepictureinpicture aria-hidden="true">
+            <source src="images/hero.webm" type="video/webm" />
+            <source src="images/hero.mp4" type="video/mp4" />
+          </video>
         </div>
       </div>
     </section>
 
-    <!-- ═══════════════════════════════════════════
-         PRO KOHO JSME TU
-    ═══════════════════════════════════════════ -->
-    <section class="section section--dark" id="pro-koho">
+    <!-- ═══ MARQUEE ═══ -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track" id="marqueeTrack">
+        <span class="marquee__part">Polední menu od 130 Kč <i>●</i> Salónek pro 60 hostů <i>●</i> Přijímáme stravenky <i>●</i> Otevřeno denně od 9:30 <i>●</i> </span>
+      </div>
+    </div>
+
+    <!-- ═══ POLEDNÍ MENU ═══ -->
+    <section class="section" id="denni-menu">
       <div class="container">
-        <div class="section-header section-header--light reveal">
-          <p class="section-eyebrow section-eyebrow--gold">pro každou příležitost</p>
-          <h2 class="section-title section-title--light">Pro koho jsme tu</h2>
-        </div>
+        <header class="sechead sechead--split reveal">
+          <div>
+            <p class="eyebrow">Polední menu</p>
+            <h2 class="h2">Co dnes vaříme</h2>
+          </div>
+          <p class="sechead__date"><span id="todayDate"></span><span class="badge">platí dnes</span></p>
+        </header>
 
-        <div class="cards reveal">
-          <article class="card">
-            <div class="card__icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <rect x="3" y="7" width="18" height="13" rx="2"/>
-                <path d="M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2"/>
-                <path d="M3 13h18"/>
-              </svg>
-            </div>
-            <h3 class="card__title">Pracovní oběd</h3>
-            <p class="card__sub">Rychlý oběd bez čekání</p>
-            <ul class="card__list">
-              <li>Přijímáme stravenky</li>
-              <li>Denní menu od 129 Kč</li>
-              <li>Centrum města</li>
-              <li>Parkování v blízkosti</li>
-            </ul>
-          </article>
+        <div class="weekly" id="weeklyMenu">
+          <div class="daytabs reveal" role="tablist" aria-label="Dny v týdnu">
+            <button class="daytab" data-day="3" role="tab">St <span>6.5.</span></button>
+            <button class="daytab" data-day="4" role="tab">Čt <span>7.5.</span></button>
+            <button class="daytab daytab--closed" data-day="5" role="tab">Pá <span>8.5.</span></button>
+            <button class="daytab" data-day="6" role="tab">So <span>9.5.</span></button>
+            <button class="daytab daytab--closed" data-day="0" role="tab">Ne <span>10.5.</span></button>
+          </div>
 
-          <article class="card card--accent">
-            <div class="card__icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/>
-                <circle cx="12" cy="12" r="3"/>
-              </svg>
-            </div>
-            <h3 class="card__title">Rodinná oslava</h3>
-            <p class="card__sub">Oslavte to s námi</p>
-            <ul class="card__list">
-              <li>Salónek pro 60 osob</li>
-              <li>Vlastní menu na míru</li>
-              <li>Zkušená obsluha</li>
-              <li>Klimatizace</li>
+          <!-- STŘEDA -->
+          <div class="daypanel" data-day="3">
+            <p class="daypanel__soup"><strong>Polévka dle výběru</strong>Indická s masem · Gulášová · Vývar s nudlemi · Česneková</p>
+            <ul class="dishlist">
+              <li class="dish"><div><span class="dish__name">Kuřecí Kung Pao</span><span class="dish__side">dušená rýže nebo hranolky</span></div><span class="dish__price">150 Kč</span></li>
+              <li class="dish"><div><span class="dish__name">Medailonky z vepřové panenky</span><span class="dish__side">s parmskou šunkou, opékané brambory</span></div><span class="dish__price">150 Kč</span></li>
+              <li class="dish"><div><span class="dish__name">Hovězí vařené</span><span class="dish__side">játrová omáčka, kynutý knedlík</span></div><span class="dish__price">150 Kč</span></li>
+              <li class="dish"><div><span class="dish__name">Srbské vepřové rizoto</span><span class="dish__side">se sýrem, okurkový salát</span></div><span class="dish__price">150 Kč</span></li>
+              <li class="dish"><div><span class="dish__name">Kapustové lívance <span class="tag">bez masa</span></span><span class="dish__side">vařené brambory, dip</span></div><span class="dish__price">150 Kč</span></li>
+              <li class="dish"><div><span class="dish__name">Sekaná pečeně</span><span class="dish__side">bramborová kaše, okurek</span></div><span class="dish__price">150 Kč</span></li>
+              <li class="dish"><div><span class="dish__name">Smažené kuřecí řízečky</span><span class="dish__side">šťouchané brambory</span></div><span class="dish__price">150 Kč</span></li>
+              <li class="dish"><div><span class="dish__name">Smažený sýr se šunkou</span><span class="dish__side">brambory nebo hranolky</span></div><span class="dish__price">150 Kč</span></li>
             </ul>
-          </article>
+          </div>
 
-          <article class="card">
-            <div class="card__icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M7 4h10c0 4-2 7-5 7s-5-3-5-7z"/>
-                <path d="M12 11v8M8 19h8"/>
-              </svg>
-            </div>
-            <h3 class="card__title">Večerní posezení</h3>
-            <p class="card__sub">Příjemná atmosféra bez shonu</p>
-            <ul class="card__list">
-              <li>Nekuřácký provoz</li>
-              <li>Výběrová kuchyně</li>
-              <li>Rezervace online</li>
-              <li>Tichá hudba</li>
+          <!-- ČTVRTEK -->
+          <div class="daypanel" data-day="4">
+            <p class="daypanel__soup"><strong>Polévka dle výběru</strong>Kyselica · Gulášová · Vývar s nudlemi · Česneková</p>
+            <ul class="dishlist">
+              <li class="dish"><div><span class="dish__name">Smažené kuřecí nitky</span><span class="dish__side">šťouchané brambory</span></div><span class="dish__price">150 Kč</span></li>
+              <li class="dish"><div><span class="dish__name">Středoevropská kuřecí směs</span><span class="dish__side">dušená rýže</span></div><span class="dish__price">150 Kč</span></li>
+              <li class="dish"><div><span class="dish__name">Svíčková na smetaně</span><span class="dish__side">houskový knedlík, brusinky</span></div><span class="dish__price">160 Kč</span></li>
+              <li class="dish"><div><span class="dish__name">Italské vepřové ragú</span><span class="dish__side">těstoviny</span></div><span class="dish__price">150 Kč</span></li>
+              <li class="dish"><div><span class="dish__name">Husí játra na slanině</span><span class="dish__side">opékané brambory</span></div><span class="dish__price">150 Kč</span></li>
+              <li class="dish"><div><span class="dish__name">Široké nudle</span><span class="dish__side">se zelím a slaninou</span></div><span class="dish__price">130 Kč</span></li>
+              <li class="dish"><div><span class="dish__name">Smažený sýr</span><span class="dish__side">brambory nebo hranolky, tatarská omáčka</span></div><span class="dish__price">150 Kč</span></li>
             </ul>
-          </article>
+          </div>
+
+          <!-- PÁTEK — ZAVŘENO -->
+          <div class="daypanel daypanel--closed" data-day="5">
+            <p class="daypanel__closed-title">Pátek 8. 5. máme zavřeno</p>
+            <p class="daypanel__closed-text">Rádi Vás uvítáme v naší partnerské restauraci <strong>Saláška Staré Město</strong>.</p>
+          </div>
+
+          <!-- SOBOTA -->
+          <div class="daypanel" data-day="6">
+            <p class="daypanel__soup"><strong>Polévka</strong>Slepičí vývar s masem a nudlemi</p>
+            <ul class="dishlist">
+              <li class="dish"><div><span class="dish__name">Pečený losos</span><span class="dish__side">bazalkové pesto, vařené brambory</span></div><span class="dish__price">210 Kč</span></li>
+              <li class="dish"><div><span class="dish__name">Kuřecí směs s grilovanou zeleninou</span><span class="dish__side">dušená rýže</span></div><span class="dish__price">185 Kč</span></li>
+              <li class="dish"><div><span class="dish__name">Smažené kuřecí řízečky</span><span class="dish__side">šťouchané brambory</span></div><span class="dish__price">185 Kč</span></li>
+              <li class="dish"><div><span class="dish__name">Vepřová panenka</span><span class="dish__side">demi-glace, gratinované brambory</span></div><span class="dish__price">210 Kč</span></li>
+              <li class="dish"><div><span class="dish__name">Svíčková na smetaně</span><span class="dish__side">houskový knedlík, brusinky</span></div><span class="dish__price">210 Kč</span></li>
+              <li class="dish"><div><span class="dish__name">Pečená kachna</span><span class="dish__side">dušené zelí, bramborový knedlík</span></div><span class="dish__price">210 Kč</span></li>
+            </ul>
+          </div>
+
+          <!-- NEDĚLE — ZAVŘENO -->
+          <div class="daypanel daypanel--closed" data-day="0">
+            <p class="daypanel__closed-title">Neděle 10. 5. máme zavřeno</p>
+            <p class="daypanel__closed-text">Otevřeno pouze pro předem domluvené akce. Rezervace na <a href="tel:+420572552597">572 552 597</a>.</p>
+          </div>
+
+          <footer class="weekly__foot reveal">
+            <p>Menu se mění každý den. Aktuální nabídku najdete i na
+              <a href="https://www.menicka.cz/123-restaurant-net-.html" target="_blank" rel="noopener">menicka.cz</a>
+              a Facebooku. Přijímáme stravenky.</p>
+            <a href="tel:+420572552597" class="btn btn--pill btn--paprika" data-magnetic>Rezervovat oběd</a>
+          </footer>
         </div>
       </div>
     </section>
 
-    <!-- ═══════════════════════════════════════════
-         SALÓNEK & OSLAVY
-    ═══════════════════════════════════════════ -->
-    <section class="section section--dark" id="oslavy">
+    <!-- ═══ SALÓNEK ═══ -->
+    <section class="section section--alt" id="oslavy">
       <div class="container">
-        <div class="salonek reveal">
+        <div class="salonek">
+          <figure class="salonek__photo reveal">
+            <div class="photo">
+              <img src="images/salonek.webp" alt="Salónek Restaurantu NET prostřený pro oslavu" loading="lazy" data-parallax />
+            </div>
+          </figure>
+
           <div class="salonek__text">
-            <p class="section-eyebrow section-eyebrow--gold">soukromé akce</p>
-            <h2 class="section-title section-title--light">Plánujete oslavu<br />nebo firemní akci?</h2>
-            <p class="salonek__perex">Náš salónek pojme až 60 hostů a je k dispozici pro narozeniny, firemní večírky, promoce i rodinné sešlosti. Postaráme se o vše od A do Z.</p>
+            <p class="eyebrow reveal">Oslavy &amp; firemní akce</p>
+            <h2 class="h2 reveal">Salónek pro šedesát hostů</h2>
+            <p class="lead reveal">Narozeniny, promoce, svatební hostina i firemní večírek.
+            Postaráme se o vše od prostřené tabule po poslední přípitek.</p>
 
-            <ul class="salonek__params">
-              <li><span class="param-label">Kapacita</span> 60 osob</li>
-              <li><span class="param-label">Catering</span> vlastní kuchyně, menu na míru</li>
-              <li><span class="param-label">Technika</span> AV technika, mikrofon, projektor</li>
-              <li><span class="param-label">Komfort</span> klimatizace, bezbariérový přístup</li>
-              <li><span class="param-label">Cena</span> od 350 Kč / osoba (dle menu)</li>
-            </ul>
+            <dl class="params reveal">
+              <div class="params__row"><dt>Kapacita</dt><dd>až 60 osob</dd></div>
+              <div class="params__row"><dt>Kuchyně</dt><dd>vlastní, menu na míru</dd></div>
+              <div class="params__row"><dt>Technika</dt><dd>projektor, mikrofon, AV</dd></div>
+              <div class="params__row"><dt>Komfort</dt><dd>klimatizace, bezbariérový přístup</dd></div>
+              <div class="params__row"><dt>Cena</dt><dd>od 350 Kč / osoba dle menu</dd></div>
+            </dl>
 
-            <div class="salonek__form-title">Nezávazná poptávka</div>
+            <h3 class="form-title reveal">Nezávazná poptávka</h3>
             <!-- TODO: napojit formulář na skutečný backend nebo FormSpree -->
-            <form class="form" action="#" method="post">
+            <form class="form reveal" action="#" method="post">
               <div class="form__row">
                 <div class="form__group">
                   <label for="jmeno" class="form__label">Jméno a příjmení</label>
-                  <input type="text" id="jmeno" name="jmeno" class="form__input" placeholder="Jan Novák" required />
+                  <input type="text" id="jmeno" name="jmeno" class="form__input" autocomplete="name" required />
                 </div>
                 <div class="form__group">
                   <label for="telefon" class="form__label">Telefon</label>
-                  <input type="tel" id="telefon" name="telefon" class="form__input" placeholder="+420 777 888 999" required />
+                  <input type="tel" id="telefon" name="telefon" class="form__input" autocomplete="tel" required />
                 </div>
               </div>
               <div class="form__row">
                 <div class="form__group">
                   <label for="pocet" class="form__label">Počet osob</label>
-                  <input type="number" id="pocet" name="pocet" class="form__input" placeholder="30" min="1" max="60" />
+                  <input type="number" id="pocet" name="pocet" class="form__input" min="1" max="60" />
                 </div>
                 <div class="form__group">
                   <label for="datum" class="form__label">Datum akce</label>
@@ -403,313 +216,168 @@
               </div>
               <div class="form__group">
                 <label for="zprava" class="form__label">Zpráva</label>
-                <textarea id="zprava" name="zprava" class="form__textarea" rows="4" placeholder="Popište typ akce, případná přání…"></textarea>
+                <textarea id="zprava" name="zprava" class="form__textarea" rows="4"></textarea>
               </div>
-              <button type="submit" class="btn btn--primary btn--full">Odeslat poptávku</button>
+              <button type="submit" class="btn btn--pill btn--ink btn--full" data-magnetic>Odeslat poptávku</button>
             </form>
           </div>
+        </div>
+      </div>
+    </section>
 
-          <div class="salonek__photo">
-            <div class="photo-frame">
-              <img src="images/salonek.webp" alt="Salónek a jídelna Restaurantu NET" loading="lazy" />
-            </div>
+    <!-- ═══ JÍDELNÍ LÍSTEK ═══ -->
+    <section class="section" id="jidelni-listek">
+      <div class="container">
+        <header class="sechead sechead--split reveal">
+          <div>
+            <p class="eyebrow">Z naší kuchyně</p>
+            <h2 class="h2">Jídelní lístek</h2>
+          </div>
+          <p class="sechead__note">Výběr z lístku. Kompletní nabídku Vám rádi předložíme v restauraci.</p>
+        </header>
+
+        <div class="menucard reveal">
+          <div class="menucat">
+            <h3 class="menucat__title">Polévky</h3>
+            <ul>
+              <li class="mline"><span>Hovězí vývar s nudlemi</span><span class="mline__price">65 Kč</span></li>
+              <li class="mline"><span>Česnečka se sýrem a toustem</span><span class="mline__price">75 Kč</span></li>
+              <li class="mline"><span>Gulášová polévka</span><span class="mline__price">79 Kč</span></li>
+            </ul>
+          </div>
+          <div class="menucat">
+            <h3 class="menucat__title">Předkrmy</h3>
+            <ul>
+              <li class="mline"><span>Bruschetta s rajčaty a bazalkou</span><span class="mline__price">119 Kč</span></li>
+              <li class="mline"><span>Tatarský biftek (100 g) s toustem</span><span class="mline__price">189 Kč</span></li>
+              <li class="mline"><span>Carpaccio z červené řepy</span><span class="mline__price">129 Kč</span></li>
+            </ul>
+          </div>
+          <div class="menucat">
+            <h3 class="menucat__title">Hlavní jídla</h3>
+            <ul>
+              <li class="mline"><span>Svíčková na smetaně, houskový knedlík</span><span class="mline__price">289 Kč</span></li>
+              <li class="mline"><span>Grilovaný losos, zelenina, citrón</span><span class="mline__price">319 Kč</span></li>
+              <li class="mline"><span>Moravský vrabec, zelí, knedlík</span><span class="mline__price">269 Kč</span></li>
+              <li class="mline"><span>Rizoto s pečenou zeleninou <span class="tag">bez masa</span></span><span class="mline__price">229 Kč</span></li>
+            </ul>
+          </div>
+          <div class="menucat">
+            <h3 class="menucat__title">Dezerty</h3>
+            <ul>
+              <li class="mline"><span>Palačinky s domácí marmeládou</span><span class="mline__price">119 Kč</span></li>
+              <li class="mline"><span>Čokoládová lávová fondánka</span><span class="mline__price">139 Kč</span></li>
+              <li class="mline"><span>Zmrzlinový pohár</span><span class="mline__price">109 Kč</span></li>
+            </ul>
+          </div>
+          <div class="menucat">
+            <h3 class="menucat__title">Nápoje</h3>
+            <ul>
+              <li class="mline"><span>Moravská vína, výběr sklenkou</span><span class="mline__price">od 65 Kč</span></li>
+              <li class="mline"><span>Pilsner Urquell 0,5 l</span><span class="mline__price">59 Kč</span></li>
+              <li class="mline"><span>Limonády a nealko</span><span class="mline__price">od 45 Kč</span></li>
+              <li class="mline"><span>Káva: espresso, cappuccino</span><span class="mline__price">od 55 Kč</span></li>
+            </ul>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ═══════════════════════════════════════════
-         JÍDELNÍ LÍSTEK
-    ═══════════════════════════════════════════ -->
-    <section class="section section--white" id="jidelni-listek">
+    <!-- ═══ RECENZE ═══ -->
+    <section class="section section--alt" id="recenze">
       <div class="container">
-        <div class="section-header reveal">
-          <p class="section-eyebrow">z naší kuchyně</p>
-          <h2 class="section-title">Jídelní lístek</h2>
-          <p class="section-note">Kompletní jídelní lístek na vyžádání nebo osobně v restauraci</p>
+        <header class="sechead reveal">
+          <p class="eyebrow">Zkušenosti hostů</p>
+          <h2 class="h2">Co se povídá u stolů</h2>
+        </header>
+
+        <div class="quotes">
+          <figure class="quote reveal">
+            <blockquote>„Chodíme sem na oběd pravidelně a nikdy jsme nebyli zklamáni. Rychlá obsluha, poctivé porce a skvělý poměr cena–kvalita.“</blockquote>
+            <figcaption><span class="quote__stars" aria-label="5 z 5 hvězd">★★★★★</span><cite>Lucie Novotná · Google</cite></figcaption>
+          </figure>
+          <figure class="quote quote--offset reveal">
+            <blockquote>„Slavili jsme narozeniny v salónku a personál se postaral o vše. Jídlo připravené přesně podle přání. Doporučuji každému.“</blockquote>
+            <figcaption><span class="quote__stars" aria-label="5 z 5 hvězd">★★★★★</span><cite>Martin Kříž · Google</cite></figcaption>
+          </figure>
+          <figure class="quote reveal">
+            <blockquote>„Skrytý klenot u Mariánského náměstí. Těžko v Uherském Hradišti najdete takovou kvalitu za tuto cenu.“</blockquote>
+            <figcaption><span class="quote__stars" aria-label="4 z 5 hvězd">★★★★<span class="quote__star--empty">★</span></span><cite>Petra Vlčková · Tripadvisor</cite></figcaption>
+          </figure>
         </div>
 
-        <div class="menu-grid reveal">
-
-          <div class="menu-cat">
-            <h3 class="menu-cat__title">Polévky</h3>
-            <ul class="menu-cat__list">
-              <li class="menu-cat__item">
-                <span class="menu-cat__name">Hovězí vývar s nudlemi</span>
-                <span class="menu-cat__price">65 Kč</span>
-              </li>
-              <li class="menu-cat__item">
-                <span class="menu-cat__name">Česnečka se sýrem a toustem</span>
-                <span class="menu-cat__price">75 Kč</span>
-              </li>
-              <li class="menu-cat__item">
-                <span class="menu-cat__name">Gulášová polévka</span>
-                <span class="menu-cat__price">79 Kč</span>
-              </li>
-            </ul>
-          </div>
-
-          <div class="menu-cat">
-            <h3 class="menu-cat__title">Předkrmy</h3>
-            <ul class="menu-cat__list">
-              <li class="menu-cat__item">
-                <span class="menu-cat__name">Bruschetta s rajčaty a bazalkou</span>
-                <span class="menu-cat__price">119 Kč</span>
-              </li>
-              <li class="menu-cat__item">
-                <span class="menu-cat__name">Tatarský biftek (100 g) s toustem</span>
-                <span class="menu-cat__price">189 Kč</span>
-              </li>
-              <li class="menu-cat__item">
-                <span class="menu-cat__name">Carpaccio z červené řepy</span>
-                <span class="menu-cat__price">129 Kč</span>
-              </li>
-            </ul>
-          </div>
-
-          <div class="menu-cat">
-            <h3 class="menu-cat__title">Hlavní jídla</h3>
-            <ul class="menu-cat__list">
-              <li class="menu-cat__item">
-                <span class="menu-cat__name">Svíčková na smetaně, houskový knedlík</span>
-                <span class="menu-cat__price">289 Kč</span>
-              </li>
-              <li class="menu-cat__item">
-                <span class="menu-cat__name">Grilovaný losos, zelenina, citrón</span>
-                <span class="menu-cat__price">319 Kč</span>
-              </li>
-              <li class="menu-cat__item">
-                <span class="menu-cat__name">Moravský vrabec, zelí, knedlík</span>
-                <span class="menu-cat__price">269 Kč</span>
-              </li>
-              <li class="menu-cat__item">
-                <span class="menu-cat__name">Rizoto s pečenou zeleninou (V)</span>
-                <span class="menu-cat__price">229 Kč</span>
-              </li>
-            </ul>
-          </div>
-
-          <div class="menu-cat">
-            <h3 class="menu-cat__title">Dezerty</h3>
-            <ul class="menu-cat__list">
-              <li class="menu-cat__item">
-                <span class="menu-cat__name">Palačinky s domácí marmeládou</span>
-                <span class="menu-cat__price">119 Kč</span>
-              </li>
-              <li class="menu-cat__item">
-                <span class="menu-cat__name">Čokoládová lávová fondánka</span>
-                <span class="menu-cat__price">139 Kč</span>
-              </li>
-              <li class="menu-cat__item">
-                <span class="menu-cat__name">Zmrzlinový pohár</span>
-                <span class="menu-cat__price">109 Kč</span>
-              </li>
-            </ul>
-          </div>
-
-          <div class="menu-cat">
-            <h3 class="menu-cat__title">Nápoje</h3>
-            <ul class="menu-cat__list">
-              <li class="menu-cat__item">
-                <span class="menu-cat__name">Moravská vína (výběr sklenice)</span>
-                <span class="menu-cat__price">od 65 Kč</span>
-              </li>
-              <li class="menu-cat__item">
-                <span class="menu-cat__name">Točené pivo Pilsner Urquell 0,5 l</span>
-                <span class="menu-cat__price">59 Kč</span>
-              </li>
-              <li class="menu-cat__item">
-                <span class="menu-cat__name">Limonády a nealkoholické nápoje</span>
-                <span class="menu-cat__price">od 45 Kč</span>
-              </li>
-              <li class="menu-cat__item">
-                <span class="menu-cat__name">Káva (espresso, cappuccino…)</span>
-                <span class="menu-cat__price">od 55 Kč</span>
-              </li>
-            </ul>
-          </div>
-
-        </div>
+        <p class="quotes__total reveal">4,2 ★ z 708 recenzí na Google</p>
       </div>
     </section>
 
-    <!-- ═══════════════════════════════════════════
-         RECENZE
-    ═══════════════════════════════════════════ -->
-    <section class="section section--cream" id="recenze">
+    <!-- ═══ O NÁS ═══ -->
+    <section class="section" id="o-nas">
       <div class="container">
-        <div class="section-header reveal">
-          <p class="section-eyebrow">zkušenosti hostů</p>
-          <h2 class="section-title">Co říkají hosté</h2>
-        </div>
-
-        <div class="reviews reveal">
-          <article class="review">
-            <div class="review__stars">★★★★★</div>
-            <p class="review__text">„Chodíme sem na oběd pravidelně a nikdy jsme nebyli zklamáni. Rychlá obsluha, poctivé porce a skvělý poměr cena–kvalita — víc od oběda nechcete."</p>
-            <div class="review__author">
-              <div class="review__avatar">LN</div>
-              <div>
-                <div class="review__name">Lucie Novotná</div>
-                <div class="review__platform">Google recenze</div>
-              </div>
-            </div>
-          </article>
-
-          <article class="review">
-            <div class="review__stars">★★★★★</div>
-            <p class="review__text">„Slavili jsme narozeniny v salónku a personál se postaral o vše. Příjemný interiér, ochotná obsluha a jídlo připravené přesně podle přání — doporučuji každému."</p>
-            <div class="review__author">
-              <div class="review__avatar">MK</div>
-              <div>
-                <div class="review__name">Martin Kříž</div>
-                <div class="review__platform">Google recenze</div>
-              </div>
-            </div>
-          </article>
-
-          <article class="review">
-            <div class="review__stars">★★★★☆</div>
-            <p class="review__text">„Skrytý klenot u Mariánského náměstí. Těžko v Uherském Hradišti najdete takovou kvalitu za tuto cenu. Rozhodně se vrátíme."</p>
-            <div class="review__author">
-              <div class="review__avatar">PV</div>
-              <div>
-                <div class="review__name">Petra Vlčková</div>
-                <div class="review__platform">Tripadvisor recenze</div>
-              </div>
-            </div>
-          </article>
-        </div>
-
-        <div class="reviews__cta">
-          <!-- TODO: doplnit přímý odkaz na Google recenze -->
-          <a href="#" class="reviews__link">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:16px;height:16px;vertical-align:-3px;color:var(--gold);"><path d="M12 2l2.9 6.5 7.1.6-5.4 4.7 1.7 7L12 17.1 5.7 20.8l1.7-7L2 9.1l7.1-.6z"/></svg>
-            4,2 · 708 recenzí na Google
-            <span aria-hidden="true">→</span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════
-         O NÁS
-    ═══════════════════════════════════════════ -->
-    <section class="section section--white" id="o-nas">
-      <div class="container">
-        <div class="about reveal">
+        <div class="about">
           <div class="about__text">
-            <p class="section-eyebrow">náš příběh</p>
-            <h2 class="section-title">O nás</h2>
-            <!-- TODO: doplnit rok otevření a počet členů týmu -->
-            <p class="about__perex">Restaurant NET je rodinný podnik v samém centru Uherského Hradiště, který od roku <strong>[ROK OTEVŘENÍ]</strong> nabízí domácí moravskou kuchyni s důrazem na čerstvé suroviny a přátelskou atmosféru.</p>
-            <p class="about__body">Náš tým <strong>[POČET]</strong> nadšených lidí každý den pracuje na tom, aby si každý host odnesl příjemný zážitek — ať přichází na rychlý oběd, romantickou večeři nebo velkou rodinnou oslavu. Věříme, že dobré jídlo a pohostinnost jsou základem spokojené komunity.</p>
+            <p class="eyebrow reveal">Náš příběh</p>
+            <h2 class="h2 reveal">Rodinný podnik v srdci města</h2>
+            <p class="lead reveal">Restaurant NET najdete pár kroků od Mariánského náměstí v centru
+            Uherského Hradiště. Vaříme domácí moravskou kuchyni z čerstvých surovin: v poledne rychle
+            a poctivě, večer beze spěchu.</p>
 
-            <div class="about__facts">
-              <!-- TODO: doplnit rok otevření -->
-              <div class="fact">
-                <div class="fact__value">[ROK]</div>
-                <div class="fact__label">rok otevření</div>
-              </div>
-              <div class="fact">
-                <!-- TODO: doplnit počet členů týmu -->
-                <div class="fact__value">[X]+</div>
-                <div class="fact__label">členů týmu</div>
-              </div>
-              <div class="fact">
-                <div class="fact__value">60</div>
-                <div class="fact__label">míst v salónku</div>
-              </div>
-            </div>
+            <dl class="facts reveal">
+              <div class="fact"><dt data-count="60">0</dt><dd>míst v salónku</dd></div>
+              <div class="fact"><dt data-count="708">0</dt><dd>recenzí na Google</dd></div>
+              <div class="fact"><dt>9:30</dt><dd>otevíráme denně</dd></div>
+            </dl>
           </div>
 
-          <div class="about__photo">
-            <div class="photo-frame photo-frame--tall">
-              <img src="images/vstup.webp" alt="Vstup do Restaurantu NET v Uherském Hradišti" loading="lazy" />
+          <figure class="about__photo reveal">
+            <div class="photo photo--tall">
+              <img src="images/vstup.webp" alt="Vstup do Restaurantu NET v Uherském Hradišti" loading="lazy" data-parallax />
             </div>
-          </div>
+          </figure>
         </div>
       </div>
     </section>
 
-    <!-- ═══════════════════════════════════════════
-         KONTAKT
-    ═══════════════════════════════════════════ -->
-    <section class="section section--dark" id="kontakt">
+    <!-- ═══ KONTAKT ═══ -->
+    <section class="section section--alt" id="kontakt">
       <div class="container">
-        <div class="section-header section-header--light reveal">
-          <p class="section-eyebrow section-eyebrow--gold">přijďte nás navštívit</p>
-          <h2 class="section-title section-title--light">Kontakt</h2>
-        </div>
+        <header class="sechead reveal">
+          <p class="eyebrow">Přijďte nás navštívit</p>
+          <h2 class="h2">Kontakt</h2>
+        </header>
 
         <div class="contact reveal">
-          <div class="contact__ctas">
-            <a href="tel:+420572552597" class="contact-btn contact-btn--phone">
-              <span class="contact-btn__icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4l3 0 2 5-2.5 1.5a11 11 0 005 5L14 13l5 2 0 3a2 2 0 01-2 2A16 16 0 014 7a2 2 0 012-2"/></svg>
-              </span>
-              <div>
-                <div class="contact-btn__label">Zavolejte nám</div>
-                <div class="contact-btn__value">+420 572 552 597</div>
-              </div>
+          <div class="contact__left">
+            <a href="tel:+420572552597" class="contact-line">
+              <span class="contact-line__label">Zavolejte nám</span>
+              <span class="contact-line__value">+420 572 552 597</span>
             </a>
-            <a href="https://wa.me/420572552597" class="contact-btn contact-btn--whatsapp" target="_blank" rel="noopener">
-              <span class="contact-btn__icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 01-12.8 6.4L3 20l1.6-5.2A8 8 0 1121 12z"/></svg>
-              </span>
-              <div>
-                <div class="contact-btn__label">WhatsApp</div>
-                <div class="contact-btn__value">Napište zprávu</div>
-              </div>
+            <a href="https://wa.me/420572552597" class="contact-line contact-line--wa" target="_blank" rel="noopener">
+              <span class="contact-line__label">WhatsApp</span>
+              <span class="contact-line__value">napište zprávu</span>
             </a>
-          </div>
 
-          <div class="contact__info">
-            <div class="contact__block">
-              <h3 class="contact__block-title">Adresa</h3>
-              <address class="contact__address">
-                Restaurant NET<br />
-                Jindřícha Průchy 310<br />
-                686 01 Uherské Hradiště<br />
-                <small style="color:rgba(255,255,255,.45);font-size:.8rem;">u Mariánského náměstí</small>
-              </address>
-            </div>
+            <address class="contact__address">
+              Restaurant NET<br />
+              Jindřícha Průchy 310<br />
+              686 01 Uherské Hradiště<br />
+              <span class="contact__address-note">u Mariánského náměstí</span>
+            </address>
 
-            <div class="contact__block">
-              <h3 class="contact__block-title">Otevírací doba</h3>
-              <table class="hours">
-                <tr>
-                  <td>Pondělí – Pátek</td>
-                  <td>9:30 – 23:00</td>
-                </tr>
-                <tr>
-                  <td>Sobota – Neděle</td>
-                  <td>9:30 – 23:59</td>
-                </tr>
-              </table>
-            </div>
+            <table class="hours">
+              <tr><td>Pondělí – Pátek</td><td>9:30 – 23:00</td></tr>
+              <tr><td>Sobota – Neděle</td><td>9:30 – 23:59</td></tr>
+            </table>
 
-            <div class="contact__block">
-              <h3 class="contact__block-title">Přijímáme stravenky</h3>
-              <div class="stravenky">
-                <span class="stravenka">Sodexo</span>
-                <span class="stravenka">Up</span>
-                <span class="stravenka">Edenred</span>
-                <span class="stravenka">Pluxee</span>
-              </div>
-            </div>
+            <p class="contact__stravenky">Přijímáme stravenky: Sodexo · Up · Edenred · Pluxee</p>
           </div>
 
           <div class="contact__map">
             <iframe
-              class="map-embed"
               src="https://maps.google.com/maps?q=Jind%C5%99%C3%ADcha%20Pr%C5%AFchy%20310%2C%20Uhersk%C3%A9%20Hradi%C5%A1t%C4%9B&t=&z=16&ie=UTF8&iwloc=&output=embed"
-              width="100%" height="360"
-              style="border:0;border-radius:10px;"
-              allowfullscreen=""
-              loading="lazy"
+              width="100%" height="100%"
+              allowfullscreen="" loading="lazy"
               referrerpolicy="no-referrer-when-downgrade"
-              title="Mapa — Restaurant NET, Jindřícha Průchy 310, Uherské Hradiště">
+              title="Mapa: Restaurant NET, Jindřícha Průchy 310, Uherské Hradiště">
             </iframe>
           </div>
         </div>
@@ -718,173 +386,40 @@
 
   </main>
 
-  <!-- ═══════════════════════════════════════════
-       FOOTER
-  ═══════════════════════════════════════════ -->
+  <!-- ═══ FOOTER ═══ -->
   <footer class="footer">
     <div class="container">
+      <p class="footer__wordmark" aria-hidden="true">Restaurant NET</p>
+
       <div class="footer__cols">
-
         <div class="footer__col">
-          <div class="footer__brand">
-            <span class="footer__logo">Restaurant <strong>NET</strong></span>
-            <span class="footer__tagline">Uherské Hradiště</span>
-          </div>
-          <p class="footer__about">Rodinná restaurace v centru Uherského Hradiště — moravská kuchyně, salónek pro oslavy a každodenní polední menu.</p>
+          <p class="footer__about">Rodinná restaurace v centru Uherského Hradiště: moravská kuchyně,
+          salónek pro oslavy a každodenní polední menu.</p>
         </div>
-
+        <nav class="footer__col footer__links" aria-label="Patičková navigace">
+          <a href="#denni-menu">Dnešní menu</a>
+          <a href="#oslavy">Salónek &amp; oslavy</a>
+          <a href="#jidelni-listek">Jídelní lístek</a>
+          <a href="#o-nas">O nás</a>
+          <a href="#kontakt">Kontakt</a>
+        </nav>
         <div class="footer__col">
-          <h4 class="footer__col-title">Navigace</h4>
-          <nav class="footer__links">
-            <a href="#denni-menu" class="footer__link">Denní menu</a>
-            <a href="#oslavy" class="footer__link">Oslavy &amp; salónek</a>
-            <a href="#jidelni-listek" class="footer__link">Jídelní lístek</a>
-            <a href="#recenze" class="footer__link">Recenze</a>
-            <a href="#o-nas" class="footer__link">O nás</a>
-            <a href="#kontakt" class="footer__link">Kontakt</a>
-          </nav>
+          <p><a href="tel:+420572552597">+420 572 552 597</a></p>
+          <p>Jindřícha Průchy 310<br />686 01 Uherské Hradiště</p>
+          <p>Po–Pá 9:30–23:00<br />So–Ne 9:30–23:59</p>
         </div>
-
-        <div class="footer__col">
-          <h4 class="footer__col-title">Kontakt</h4>
-          <ul class="footer__contact">
-            <li><a href="tel:+420572552597" class="footer__link">+420 572 552 597</a></li>
-            <li>Jindřícha Průchy 310<br />686 01 Uherské Hradiště</li>
-            <li>Po–Pá 9:30–23:00<br />So–Ne 9:30–23:59</li>
-          </ul>
-        </div>
-
       </div>
 
       <div class="footer__bottom">
-        <p class="footer__copy">&copy; 2026 Restaurant NET. Všechna práva vyhrazena.</p>
-        <p class="footer__credit">Web vytvořil <strong>Mark Bobčík</strong></p>
+        <p>© 2026 Restaurant NET. Všechna práva vyhrazena.</p>
+        <p>Web vytvořil <strong>Mark Bobčík</strong></p>
       </div>
     </div>
   </footer>
 
-  <script>
-    // ─── Navigace: přidej .scrolled při scrollu > 80px ───────────────────────
-    const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 80);
-    }, { passive: true });
-
-    // ─── Hamburger menu ───────────────────────────────────────────────────────
-    const hamburger = document.getElementById('hamburger');
-    const navLinks  = document.getElementById('navLinks');
-    hamburger.addEventListener('click', () => {
-      const open = navLinks.classList.toggle('open');
-      hamburger.classList.toggle('open', open);
-      hamburger.setAttribute('aria-expanded', open);
-    });
-    // Zavři menu při kliknutí na odkaz
-    navLinks.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        navLinks.classList.remove('open');
-        hamburger.classList.remove('open');
-        hamburger.setAttribute('aria-expanded', false);
-      });
-    });
-
-    // ─── Dnešní datum česky ───────────────────────────────────────────────────
-    const dny    = ['neděle', 'pondělí', 'úterý', 'středa', 'čtvrtek', 'pátek', 'sobota'];
-    const mesice = ['ledna', 'února', 'března', 'dubna', 'května', 'června',
-                    'července', 'srpna', 'září', 'října', 'listopadu', 'prosince'];
-    const dnes   = new Date();
-    const text   = `${dny[dnes.getDay()]} ${dnes.getDate()}. ${mesice[dnes.getMonth()]} ${dnes.getFullYear()}`;
-    document.getElementById('todayDate').textContent = text;
-
-    // ─── Hero video: slow-cinema feel + bulletproof fade-in ─────────────────
-    const heroVideo = document.getElementById('heroVideo');
-    if (heroVideo) {
-      // Slow-mo je natívně zapečené ve videu (motion-interpolated 60 %).
-      // Necháváme 1.0× playback aby se nezdvojovala zpomalení.
-      heroVideo.playbackRate = 1.0;
-
-      // Fade-in: poslouchám více eventů + timeout fallback (různé browsery
-      // emitují různé eventy v různém pořadí, takže triple-redundance)
-      const showVideo = () => heroVideo.classList.add('is-ready');
-      heroVideo.addEventListener('canplay',    showVideo, { once: true });
-      heroVideo.addEventListener('playing',    showVideo, { once: true });
-      heroVideo.addEventListener('loadeddata', showVideo, { once: true });
-      // Fallback — pokud se žádný event nespustí (cached video), 1,5s safety
-      setTimeout(showVideo, 1500);
-      // Pokud už je video připravené v okamžiku spuštění JS
-      if (heroVideo.readyState >= 3) showVideo();
-
-      // Force play attempt — autoplay může selhat na iOS bez user gesture;
-      // .play() vrací promise, kterou bezpečně spolkneme
-      heroVideo.play().catch(() => {});
-
-      // Pauza při skrytém tabu — šetří CPU/baterii
-      document.addEventListener('visibilitychange', () => {
-        if (document.hidden) heroVideo.pause();
-        else heroVideo.play().catch(() => {});
-      });
-    }
-
-    // ─── IntersectionObserver scroll-reveal ───────────────────────────────────
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('is-visible');
-          io.unobserve(e.target);
-        }
-      });
-    }, { threshold: .12, rootMargin: '0px 0px -8% 0px' });
-
-    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
-    // ─── Scroll-spy: aktivní odkaz v navigaci dle scrollu ─────────────────────
-    const navLinkEls = document.querySelectorAll('.nav__link');
-    const sections   = Array.from(navLinkEls)
-      .map(a => document.querySelector(a.getAttribute('href')))
-      .filter(Boolean);
-
-    const setActiveLink = () => {
-      const fromTop = window.scrollY + nav.offsetHeight + 24;
-      let current   = sections[0];
-      sections.forEach(sec => { if (sec.offsetTop <= fromTop) current = sec; });
-      navLinkEls.forEach(a => {
-        a.classList.toggle('is-active', a.getAttribute('href') === '#' + current.id);
-      });
-    };
-    window.addEventListener('scroll', setActiveLink, { passive: true });
-    setActiveLink();
-
-    // ─── Týdenní menu: přepínání tabů ─────────────────────────────────────────
-    const weekly = document.getElementById('weeklyMenu');
-    if (weekly) {
-      const tabs   = weekly.querySelectorAll('.weekly-menu__tab');
-      const panels = weekly.querySelectorAll('.weekly-menu__panel');
-
-      const activate = (day) => {
-        tabs.forEach(t   => t.classList.toggle('is-active',   t.dataset.day === String(day)));
-        panels.forEach(p => p.classList.toggle('is-active', p.dataset.day === String(day)));
-      };
-
-      // Default: dnešní den, jinak první dostupný (středa = 3)
-      const todayDay     = dnes.getDay();
-      const availableDays = Array.from(tabs).map(t => t.dataset.day);
-      const startDay      = availableDays.includes(String(todayDay)) ? todayDay : availableDays[0];
-      activate(startDay);
-
-      tabs.forEach(t => t.addEventListener('click', () => activate(t.dataset.day)));
-    }
-
-    // ─── Smooth scroll pro všechny anchor odkazy ──────────────────────────────
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', e => {
-        const target = document.querySelector(anchor.getAttribute('href'));
-        if (!target) return;
-        e.preventDefault();
-        const offset = nav.offsetHeight + 8;
-        const top    = target.getBoundingClientRect().top + window.scrollY - offset;
-        window.scrollTo({ top, behavior: 'smooth' });
-      });
-    });
-  </script>
-
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>
