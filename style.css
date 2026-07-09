@@ -87,6 +87,13 @@ a:hover { color: var(--paprika-d); }
 
 section { scroll-margin-top: 96px; }
 
+/* main překrývá fixní footer (opona) */
+main {
+  position: relative;
+  z-index: 1;
+  background: var(--bone);
+}
+
 .container {
   width: min(1240px, calc(100% - 48px));
   margin-inline: auto;
@@ -214,6 +221,77 @@ section { scroll-margin-top: 96px; }
 
 .btn--full { width: 100%; text-align: center; }
 
+/* ─── Preloader ────────────────────────────────────────────────── */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: var(--ink);
+  color: var(--cream-on-ink);
+  display: grid;
+  place-items: center;
+}
+.loader.is-done { display: none; }
+
+.loader__name {
+  font-family: var(--f-display);
+  font-size: clamp(1.8rem, 4vw, 3.2rem);
+  letter-spacing: .01em;
+}
+
+.loader__count {
+  position: absolute;
+  right: clamp(24px, 5vw, 72px);
+  bottom: clamp(12px, 4vh, 40px);
+  font-family: var(--f-display);
+  font-size: clamp(4rem, 12vw, 11rem);
+  line-height: 1;
+  color: rgba(245, 239, 228, .22);
+  font-variant-numeric: tabular-nums;
+}
+
+.loader__bar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--paprika);
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+
+/* ─── Custom kurzor ────────────────────────────────────────────── */
+.cursor, .cursor-ring {
+  position: fixed;
+  top: 0; left: 0;
+  z-index: 400;
+  border-radius: 50%;
+  pointer-events: none;
+  mix-blend-mode: difference;
+  background: #fff;
+  opacity: 0;
+}
+.cursor {
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
+}
+.cursor-ring {
+  width: 42px;
+  height: 42px;
+  margin: -21px 0 0 -21px;
+  background: transparent;
+  border: 1.5px solid #fff;
+}
+html.has-cursor, html.has-cursor a, html.has-cursor button,
+html.has-cursor input, html.has-cursor textarea, html.has-cursor label {
+  cursor: none;
+}
+@media (hover: none), (pointer: coarse) {
+  .cursor, .cursor-ring { display: none; }
+}
+
 /* ─── Navigace ─────────────────────────────────────────────────── */
 .nav {
   position: fixed;
@@ -325,6 +403,10 @@ section { scroll-margin-top: 96px; }
 .mask { display: block; overflow: hidden; }
 .mask .line { display: block; }
 
+/* znaková choreografie titulku */
+.hero__headline .word { display: inline-block; white-space: nowrap; }
+.hero__headline .ch { display: inline-block; will-change: transform; }
+
 .hero__row {
   display: flex;
   align-items: flex-end;
@@ -351,9 +433,19 @@ section { scroll-margin-top: 96px; }
   position: relative;
 }
 .hero__media-clip {
+  position: relative;
   clip-path: inset(0 12% round var(--radius));
   will-change: clip-path;
 }
+.hero__gl {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+.hero__media-clip.has-gl .hero__gl { display: block; }
+.hero__media-clip.has-gl video { opacity: 0 !important; }
 .hero__media-clip video {
   width: 100%;
   height: min(86vh, 780px);
@@ -392,6 +484,24 @@ section { scroll-margin-top: 96px; }
 }
 
 /* ─── Polední menu ─────────────────────────────────────────────── */
+.weekly { position: relative; }
+
+.weekly__ghost {
+  position: absolute;
+  top: -0.18em;
+  right: -2vw;
+  z-index: 0;
+  font-family: var(--f-display);
+  font-size: clamp(9rem, 24vw, 22rem);
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(33, 27, 18, .1);
+  pointer-events: none;
+  user-select: none;
+}
+
+.daytabs, .daypanel, .weekly__foot { position: relative; z-index: 1; }
+
 .daytabs {
   display: flex;
   gap: .5rem;
@@ -462,6 +572,11 @@ section { scroll-margin-top: 96px; }
   transition: background .3s var(--ease-soft);
 }
 .dish:hover { background: rgba(33, 27, 18, .045); }
+
+.dish > div { transition: transform .45s var(--ease-out); }
+.dish:hover > div { transform: translateX(10px); }
+.dish__price { transition: transform .45s var(--ease-out); }
+.dish:hover .dish__price { transform: translateX(-6px) scale(1.08); }
 
 .dish__name {
   display: block;
@@ -793,6 +908,12 @@ section { scroll-margin-top: 96px; }
   padding: clamp(3.5rem, 7vw, 6rem) 0 2rem;
   overflow: hidden;
 }
+/* opona: footer fixně za obsahem, main ho odhalí (zapíná JS) */
+html.footer-fx .footer {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 0;
+}
 
 .footer__wordmark {
   font-family: var(--f-display);
@@ -909,4 +1030,5 @@ html.js .mask .line {
   .hero__media-clip { clip-path: none; }
   .hero__media-clip video { opacity: 1; }
   .marquee__track { transform: none !important; }
+  .loader, .cursor, .cursor-ring, .hero__gl { display: none !important; }
 }

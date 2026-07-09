@@ -17,7 +17,7 @@ One-page web pro **Restaurant NET** v centru Uherského Hradiště. Rodinná res
 
 ## Tech stack
 
-Čisté **HTML + CSS + vanilla JS**, bez build kroku. CDN závislosti: **GSAP 3.12 + ScrollTrigger** a **Lenis** (smooth-scroll).
+Čisté **HTML + CSS + vanilla JS**, bez build kroku. CDN závislosti: **GSAP 3.12 + ScrollTrigger**, **Lenis** (smooth-scroll) a **Three.js r149** (WebGL shader hero videa).
 
 | Soubor | Účel |
 |---|---|
@@ -74,7 +74,9 @@ Add-Type -AssemblyName Microsoft.VisualBasic
 
 ### `main.js` — bloky
 
-Scroll-restoration fix (manual + top) → Lenis + ScrollTrigger propojení → smooth anchor scroll → nav (scrolled/hamburger/scroll-spy) → české datum → taby menu se stagger animací → hero video fade-in + pauza při skrytém tabu → GSAP: hero timeline (mask lines), `.reveal` vstupy, video clip-path expand (matchMedia), `[data-parallax]` fotky, marquee loop, čísla faktů → magnetická tlačítka.
+Scroll-restoration fix (manual + top) → Lenis + ScrollTrigger (sdílená `scrollVelocity`) → smooth anchor scroll → rozpad hero titulku na znaky → **preloader** (counter + opona, sessionStorage skip) → nav (scrolled/hamburger/scroll-spy) → české datum + **denní režim CTA** (po 15 h primární rezervace) → taby menu (stagger + ghost písmena dne) → hero video fade-in → **WebGL shader hero videa** (Three.js, jen desktop, IO pauza) → GSAP: `.reveal`, smyk řádků titulku, clip-path expand, parallax + velocity skew fotek, velocity marquee, čísla faktů → **footer opona** (fixed + margin-bottom) → **custom kurzor** (blend-difference) → magnetická tlačítka.
+
+Detailní popis efektů: DESIGN.md sekce Motion.
 
 **Pozor:** ScrollTrigger se nesmí inicializovat během obnovy scroll pozice — proto `history.scrollRestoration = 'manual'` hned na začátku. Neodstraňovat.
 
