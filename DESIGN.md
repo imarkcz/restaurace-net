@@ -33,8 +33,7 @@ Světlý, teplý, vzdušný. Kostěná/krémová plocha, inkoustový text, jeden
 - **Preloader**: ink závoj, Gloock counter 0–100 + paprika progress bar, opona nahoru; opakovaná návštěva v session jen krátké zvednutí.
 - **Lenis** smooth-scroll napojený na GSAP ticker; `e.velocity` je sdílená pro reaktivní efekty.
 - Hero titulek: rozpad na **znaky** (word > ch), kaskádový nástup s rotací; při scrollu se řádky smýkají od sebe (±5vw scrub).
-- **Hero video = WebGL shader** (Three.js VideoTexture + custom GLSL): jemné „dýchání" obrazu, ripple za myší, RGB posun podle rychlosti scrollu. Jen desktop, fallback čisté video.
-- Hero video okno: `clip-path: inset()` scrub na full-bleed.
+- Hero video okno: `clip-path: inset()` scrub na full-bleed. Čisté video bez filtrů (WebGL distorze klient odmítl 07/2026).
 - Marquee: nekonečný pás, **timeScale řízený rychlostí a směrem scrollu** (couvá při scrollu nahoru).
 - Fotky: parallax scrub + `skewY` podle setrvačnosti scrollu (±3,5°).
 - Menu: obří ghost zkratka dne (Gloock outline) za panelem, mění se s tabem.

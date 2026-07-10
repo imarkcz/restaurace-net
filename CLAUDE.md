@@ -17,14 +17,15 @@ One-page web pro **Restaurant NET** v centru Uherského Hradiště. Rodinná res
 
 ## Tech stack
 
-Čisté **HTML + CSS + vanilla JS**, bez build kroku. CDN závislosti: **GSAP 3.12 + ScrollTrigger**, **Lenis** (smooth-scroll) a **Three.js r149** (WebGL shader hero videa).
+Čisté **HTML + CSS + vanilla JS**, bez build kroku. CDN závislosti: **GSAP 3.12 + ScrollTrigger** a **Lenis** (smooth-scroll).
 
 | Soubor | Účel |
 |---|---|
 | `index.html` | Markup celé stránky, CDN skripty na konci `<body>` |
 | `style.css` | Všechny styly, sekce oddělené `───` komentáři |
 | `main.js` | Lenis, GSAP choreografie, taby menu, nav, marquee, magnetická tlačítka |
-| `images/hero.webm` + `hero.mp4` | Reálné video záběry jídla — hero (VP9 primární, H.264 fallback) |
+| `images/hero-new.webm` + `hero-new.mp4` | Hero video: smažený sýr, 1080p (Kling, schváleno klientem 07/2026); `hero-poster.webp` poster |
+| `images/hero.webm` + `hero.mp4` | Původní reálné záběry (1280×960, záloha) |
 | `images/salonek.webp` · `vstup.webp` | Reálné fotky salónku a vstupu |
 | `PRODUCT.md` / `DESIGN.md` | Strategie a vizuální systém (impeccable skill) |
 
@@ -74,7 +75,7 @@ Add-Type -AssemblyName Microsoft.VisualBasic
 
 ### `main.js` — bloky
 
-Scroll-restoration fix (manual + top) → Lenis + ScrollTrigger (sdílená `scrollVelocity`) → smooth anchor scroll → rozpad hero titulku na znaky → **preloader** (counter + opona, sessionStorage skip) → nav (scrolled/hamburger/scroll-spy) → české datum + **denní režim CTA** (po 15 h primární rezervace) → taby menu (stagger + ghost písmena dne) → hero video fade-in → **WebGL shader hero videa** (Three.js, jen desktop, IO pauza) → GSAP: `.reveal`, smyk řádků titulku, clip-path expand, parallax + velocity skew fotek, velocity marquee, čísla faktů → **footer opona** (fixed + margin-bottom) → **custom kurzor** (blend-difference) → magnetická tlačítka.
+Scroll-restoration fix (manual + top) → Lenis + ScrollTrigger (sdílená `scrollVelocity`) → smooth anchor scroll → rozpad hero titulku na znaky → **preloader** (counter + opona, sessionStorage skip) → nav (scrolled/hamburger/scroll-spy) → české datum + **denní režim CTA** (po 15 h primární rezervace) → taby menu (stagger + ghost písmena dne) → hero video fade-in → GSAP: `.reveal`, smyk řádků titulku, clip-path expand, parallax + velocity skew fotek, velocity marquee, čísla faktů → **footer opona** (fixed + margin-bottom) → **custom kurzor** (blend-difference) → magnetická tlačítka.
 
 Detailní popis efektů: DESIGN.md sekce Motion.
 
@@ -89,7 +90,7 @@ Detailní popis efektů: DESIGN.md sekce Motion.
 
 ## Pravidla (NEPORUŠOVAT)
 
-1. **Jen reálné fotky/video z restaurace** — žádné AI-generované, malované či stock obrazy jídla (rozhodnutí klienta 07/2026)
+1. **Autentický vzhled** — žádné malované, ilustrované či stock obrazy jídla; fotorealistická AI generace jen se schválením klienta a jen jídla ze skutečné nabídky (rozhodnutí klienta 07/2026)
 2. **Žádné emoji v UI** — ikony jen inline SVG
 3. **Žádné em-dash v textech** — dvojtečka, čárka, tečka nebo ·
 4. **Světlé ladění** — tmavé jsou jen marquee a footer; celoplošně tmavý design klient odmítl
