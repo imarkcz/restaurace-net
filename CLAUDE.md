@@ -13,39 +13,47 @@ One-page web pro **Restaurant NET** v centru Uherského Hradiště. Rodinná res
 - **Produkce:** https://net2026.vercel.app (auto-deploy z `main` přes Vercel)
 - **Autor:** Mark Bobčík
 
-**Strategický a vizuální kontext je v `PRODUCT.md` a `DESIGN.md`** — čti je před každou designovou prací. Klíčová rozhodnutí klienta (07/2026): žádné AI-generované/malované obrazy (jen reálné fotky a video), světlé teplé ladění, moderna úrovně awwwards.
-
 ## Tech stack
 
-Čisté **HTML + CSS + vanilla JS**, bez build kroku. CDN závislosti: **GSAP 3.12 + ScrollTrigger** a **Lenis** (smooth-scroll).
+Čisté **HTML + CSS + vanilla JS**. Žádné frameworky, build kroky, ani závislosti.
 
-| Soubor | Účel |
-|---|---|
-| `index.html` | Markup celé stránky, CDN skripty na konci `<body>` |
-| `style.css` | Všechny styly, sekce oddělené `───` komentáři |
-| `main.js` | Lenis, GSAP choreografie, taby menu, nav, marquee, magnetická tlačítka |
-| `images/hero.webm` + `hero.mp4` | Reálné video záběry jídla — hero (VP9 primární, H.264 fallback) |
-| `images/salonek.webp` · `vstup.webp` | Reálné fotky salónku a vstupu |
-| `PRODUCT.md` / `DESIGN.md` | Strategie a vizuální systém (impeccable skill) |
+| Soubor | Účel | Rozsah |
+|---|---|---|
+| `index.html` | Celá stránka — markup, inline `<script>` na konci `<body>`, inline SVG ikony | ~826 řádků |
+| `style.css` | Všechny styly v jednom souboru, sekce oddělené `═══` komentáři | ~1 743 řádků |
+| `images/hero.webm` + `hero.mp4` | Hero video duál — VP9 458 KB primární, H.264 587 KB Safari fallback | — |
+| `images/salonek.webp` · `vstup.webp` | Statické fotky pro hero/salónek/about | — |
+| `CLAUDE.md` | Tento soubor | — |
+| `.gitignore` | Standardní + `.vercel/` (přidává Vercel CLI při `vercel link`) | — |
 
 ## Příkazy
 
 ### Lokální vývoj
 ```bash
+# Spustit dev server (potřeba Python 3)
 python -m http.server 8080
-# → http://localhost:8080, po změnách stačí Ctrl+F5
+# → otevři http://localhost:8080
 ```
+Restart serveru po změnách HTML/CSS/JS **není potřeba** — stačí `Ctrl+F5` v prohlížeči.
 
 ### Deploy
 ```bash
-git add . && git commit -m "popis" && git push   # push na main = auto-deploy (~10 s)
-npx vercel deploy --prod --yes                    # manuální deploy, pokud potřeba
+# Vercel je propojený s GitHub repem — push na main = auto-deploy za ~10s
+git add .
+git commit -m "popis změny"
+git push
+
+# Manuální deploy (pokud někdy potřeba):
+npx vercel deploy --prod --yes
 ```
 
-### Optimalizace videa (při výměně hero videa)
+### Optimalizace videa (pokud se vymění hero video)
 ```bash
+# MP4 (H.264, no audio, 1280×960, ~1 Mbps)
 ffmpeg -i SOURCE.mp4 -an -c:v libx264 -preset slow -crf 26 -pix_fmt yuv420p \
   -movflags +faststart -vf "scale=1280:-2:flags=lanczos,fps=24" images/hero.mp4
+
+# WebM (VP9, smaller, primární zdroj)
 ffmpeg -i SOURCE.mp4 -an -c:v libvpx-vp9 -crf 33 -b:v 0 -row-mt 1 \
   -vf "scale=1280:-2:flags=lanczos,fps=24" images/hero.webm
 ```
@@ -59,56 +67,126 @@ Add-Type -AssemblyName Microsoft.VisualBasic
 
 ## Architektura
 
-### `index.html` — mapa sekcí (pořadí je finální)
+### `index.html` — velká mapa
 
-1. **Nav** — fixed, průhledná → bone blur po scrollu (`.scrolled`), scroll-spy `.is-active`, pill CTA s telefonem
-2. **Hero** (`#uvod`) — meta řádek, maskovaný Gloock titulek (řádek 2 paprika), sub + pill CTAs, video okno které se scrollem roztáhne na full-bleed (`clip-path` scrub)
-3. **Marquee** — ink pás s nekonečným textovým loopem
-4. **Polední menu** (`#denni-menu`) — pill taby dnů (`data-day`, default dnešek přes `getDay()`), panely St/Čt/Pá/So/Ne (Pá+Ne zavřeno), data hardcoded z menicka.cz
-5. **Salónek** (`#oslavy`) — sticky fotka + parametry + poptávkový formulář (`action="#"`, TODO backend)
-6. **Jídelní lístek** (`#jidelni-listek`) — 5 kategorií, typografická karta, CSS columns
-7. **Recenze** (`#recenze`) — 3 velké Gloock citace, prostřední zarovnaná vpravo
-8. **O nás** (`#o-nas`) — text + fakty (čísla se dopočítávají) + fotka vstupu
-9. **Kontakt** (`#kontakt`) — telefon/WhatsApp řádky, adresa, hodiny, Google Maps iframe (sepia filtr)
-10. **Footer** — ink, obří Gloock wordmark, 3 sloupce, credit
+HTML má 10 hlavních sekcí oddělených `<!-- ═══ -->` blokovými komentáři. Pořadí je finální:
 
-### `main.js` — bloky
+1. **Nav** — fixed, transparentní → tmavá při scrollu (>80px), scroll-spy přidává `.is-active` aktivnímu odkazu
+2. **Hero** — `min-height: 100vh`, video s posterem, asymetrický 2-řádkový headline (line1 normal, line2 italic bold), staggered fade-up animace
+3. **Polední menu** — 5 panelů (St/Čt/Pá/So/Ne) v `.weekly-menu`, taby přepínané přes `data-day`, defaultně dnešní den (`getDay()` 0–6). Pátek a neděle jsou „closed" panely. Data hardcoded; zdroj viz [Menicka.cz integrace](#menickacz-integrace).
+4. **Pro koho jsme tu** — 3 karty s gold top-line hover animací
+5. **Salónek** — TMAVÉ pozadí (`section--dark`), 2-col layout, formulář s tmavými inputy a zlatým submit
+6. **Jídelní lístek** — 5 kategorií, každá 3–4 vzorová jídla
+7. **Recenze** — 3 karty s velkým gold uvozovkovým symbolem (`::before`)
+8. **O nás** — 2-col, fakta o restauraci
+9. **Kontakt** — telefon + WhatsApp tlačítka + Google Maps iframe (search-based, bez API klíče)
+10. **Footer** — 3-col + bottom credit
 
-Scroll-restoration fix (manual + top) → Lenis + ScrollTrigger propojení → smooth anchor scroll → nav (scrolled/hamburger/scroll-spy) → české datum → taby menu se stagger animací → hero video fade-in + pauza při skrytém tabu → GSAP: hero timeline (mask lines), `.reveal` vstupy, video clip-path expand (matchMedia), `[data-parallax]` fotky, marquee loop, čísla faktů → magnetická tlačítka.
+### `style.css` — pořadí sekcí
 
-**Pozor:** ScrollTrigger se nesmí inicializovat během obnovy scroll pozice — proto `history.scrollRestoration = 'manual'` hned na začátku. Neodstraňovat.
+```
+:root (custom properties)  →  Reset/base + ::selection + scrollbar  →
+keyframes + .reveal  →  .container + .section + section-header  →
+.btn + variants  →  Nav  →  Hero  →  Weekly menu (taby + panely)  →
+Cards  →  Salónek + form  →  Menu grid  →  Reviews  →  About  →
+Contact  →  Footer  →  Photo frames (filter grading)  →  Responsive
+```
 
-## Design systém (detail v DESIGN.md)
+Všechny barvy, easing a stíny jsou v `:root` jako custom properties — **nikdy se nehardcodují**.
 
-- Barvy: `--bone #F5EFE4` · `--bone-2 #ECE4D3` · `--ink #211B12` · `--paprika #B84A22` · `--moss #5E7050` — **neměnit bez konzultace**
-- Typografie: **Gloock** (display) + **Schibsted Grotesk** (UI/text), Google Fonts latin-ext
-- Easing: expo.out / power3.out; žádný linear (mimo scrub), bounce, elastic
-- Tlačítka pill, fotky radius 20, jemné teplé stíny
+### Inline `<script>` na konci `<body>`
 
-## Pravidla (NEPORUŠOVAT)
+Šest oddělených bloků (každý označený `// ─── Název ───`):
 
-1. **Jen reálné fotky/video z restaurace** — žádné AI-generované, malované či stock obrazy jídla (rozhodnutí klienta 07/2026)
-2. **Žádné emoji v UI** — ikony jen inline SVG
-3. **Žádné em-dash v textech** — dvojtečka, čárka, tečka nebo ·
-4. **Světlé ladění** — tmavé jsou jen marquee a footer; celoplošně tmavý design klient odmítl
-5. Reveal animace přes ScrollTrigger `once`, ne `window.scroll` listenery
-6. `prefers-reduced-motion` musí vše vypnout (Lenis, scrub, marquee, autoplay)
-7. Nové sekce jen na vyžádání — struktura je finální
-8. Fotky needitovat destruktivně, jen CSS
+1. **Nav scroll-state** — `window.scroll` listener přidává `.scrolled` při >80px
+2. **Hamburger toggle** — třída `.open` na `#navLinks` + `#hamburger`
+3. **Dnešní datum česky** — `dny[]` + `mesice[]` arraye, vypsáno do `#todayDate`
+4. **Hero video** — `playbackRate = 0.8` (slow-cinema), triple-redundant event listening (`canplay`/`playing`/`loadeddata`) + 1,5s timeout fallback pro `is-ready` třídu (CSS fade-in), pause při skrytém tabu
+5. **IntersectionObserver scroll-reveal** — pozoruje `.reveal` elementy, přidává `.is-visible` jednou při vstupu do viewportu
+6. **Scroll-spy nav** — aktivní `.nav__link` dle pozice scrollu vůči `<section>` offsetům
+7. **Týdenní menu taby** — přepínání `.is-active` mezi `.weekly-menu__tab` + `.weekly-menu__panel` podle `data-day`
+8. **Smooth scroll** — pro všechny `a[href^="#"]` s offsetem `nav.offsetHeight + 8`
+
+### CSS classes a vzory
+
+- BEM: `.block`, `.block__element`, `.block--modifier`
+- Sekce: `.section.section--cream` / `.section--dark` / `.section--white` určují pozadí
+- Reveal animace: přidat třídu `.reveal` na element → IntersectionObserver ho odhalí
+- Eyebrow: `<p class="section-eyebrow">text</p>` — em-dashes a uppercase styling řeší CSS `::before`/`::after`
+
+## Design systém
+
+### Barvy (CSS custom properties v `:root`)
+- `--burgundy: #8B2635` — primární akcent
+- `--burgundy-d: #5A1827` — tmavá pozadí (hero, kontakt, salónek)
+- `--cream: #F7F2EA` — sekundární pozadí
+- `--gold: #C8A86E` — zlatý akcent (linky, eyebrows, ikony)
+- `--text: #2C2C2C` — text
+- WhatsApp tlačítko: `#2D4A3A` (British racing green) — **NIKDY** ne neonová WhatsApp zelená
+
+### Typografie (Google Fonts)
+- **Cormorant Garamond** 400/600/italic — nadpisy, hero `headline-line2` (italic bold)
+- **DM Sans** 300/400/500 — text, UI
+
+### Easing
+- `--ease: cubic-bezier(0.32, 0.72, 0, 1)` — Apple-esque, pro všechny transitions
+- `--ease-soft: cubic-bezier(0.16, 1, 0.3, 1)` — scroll-reveal výstupy
+- **NIKDY** `linear`, `ease-in-out` — vždy custom cubic-bezier
+
+### Stín systém
+Diffusion shadows (měkké, široké, tónované do burgundy):
+- `--shadow-sm: 0 2px 12px rgba(40,18,22,.06)`
+- `--shadow-md: 0 12px 32px -10px rgba(40,18,22,.14)`
+- `--shadow-lg: 0 20px 60px -16px rgba(40,18,22,.2)`
+
+## Pravidla designu (NEPORUŠOVAT)
+
+Projekt je v archetypu **Editorial Luxury** (taste-skill). Z toho plyne:
+
+1. **Žádné emoji v UI.** Vše ikona = inline SVG (Phosphor-thin styl, stroke-width 1.4–1.6)
+2. **Žádný Inter / Roboto / Arial** — Cormorant + DM Sans drží premium tón
+3. **Žádné tvrdé černé stíny** (`rgba(0,0,0,0.3)`) — pouze diffusion shadows tónované do burgundy
+4. **Žádné neonové gradienty / fialovo-modré AI patterns** — paleta je teplá moravská
+5. **Filmová zrnitost** — `body::before` aplikuje SVG-noise overlay (opacity 0.035, mix-blend overlay)
+6. **Custom cubic-bezier** transitions, nikdy `linear`
+7. **Macro-whitespace** — sekce `padding: 80px 0` desktop, 48px mobile
+8. **Eyebrows** vždy s em-dashes a `letter-spacing: .3em` uppercase, gold barva
+9. **Section titles** mají dekorativní 60×2px gold linku pod sebou (`::after`)
+10. **Karty** s gold top-line animací při hoveru (scaleX 0→1) + lift -6px
+11. **Reveal** scroll animace přes IntersectionObserver, ne `window.scroll` listener
+12. **Nikdy** neměň barvy v `:root` bez konzultace — paleta je domluvená a sladěná
+13. **Nikdy** nepřidávej nové sekce bez požadavku — struktura je finální
+14. Při úpravě fotek: jen CSS grading (sepia/saturate/hue-rotate filter), **nikdy** nepřepisovat originální `.webp` v `images/`
 
 ## Menicka.cz integrace
 
-Menu je **hardcoded v HTML** (sekce `#denni-menu`), ručně dle https://www.menicka.cz/123-restaurant-net-.html.
+Menu je aktuálně **hardcoded v HTML** v sekci `weekly-menu` — ručně aktualizováno z https://www.menicka.cz/123-restaurant-net-.html.
 
-**Plán automatizace** (neimplementováno): PHP cron scrapuje menicka 1× denně → `menu.json` → JS fetch. Vyžaduje hosting s cronem (Wedos, Forpsi, Cloudflare Workers).
+**Plán automatizace** (zatím neimplementováno, viz konverzace s Markem):
+- Varianta A: oficiální menicka.cz widget (iframe) — nejjednodušší, ale nelze stylizovat
+- **Varianta B (preferovaná):** PHP cron skript scrapuje menicka 1× denně, generuje `menu.json`, JS ho fetchuje
+- Varianta C: Cloudflare Worker proxy
 
-## TODO — před produkcí
+Vyžaduje hosting s podporou cron / scheduled tasks (Wedos, Forpsi, Cloudflare Workers).
 
-- [ ] **Telefon** 572 552 597 — ověřit s majitelem
-- [ ] **Adresa** Jindřícha Průchy 310 — ověřit
-- [ ] **Otevírací doba SO/NE** — ověřit (nyní 9:30–23:59 dle dřívějška)
-- [ ] **Recenze** — fiktivní, nahradit reálnými z Google (4,2 / 708 ověřit)
-- [ ] **Kompletní jídelní lístek** — nyní 3–4 vzorová jídla na kategorii
-- [ ] **Formulář salónku** — `action="#"`, napojit FormSpree / Web3Forms
-- [ ] **Lepší foto/video materiál** — hero video je 1280×960; ideálně natočit nové záběry interiéru + jídla na šířku, přidat fotky týmu
-- [ ] **Vlastní doména** — případně nakonfigurovat ve Vercelu
+## Skilly aplikované v tomto projektu
+
+Načítají se z `~/.claude/skills/`:
+- `frontend-design` — premium UI patterns
+- `high-end-visual-design` — Editorial Luxury archetyp, Double-Bezel, custom cubic-bezier, macro-whitespace, eyebrow tags
+- `design-taste-frontend` — anti-emoji policy, deterministická typografie, anti-3-col-card-bias
+
+## TODO — co doplnit před produkcí
+
+- [ ] **Telefon** — všude je `572 552 597` (z menicka), ověřit s majitelem
+- [ ] **Adresa** v kontaktu — Jindřícha Průchy 310 (z firmy.cz), ověřit
+- [ ] **Otevírací doba SO/NE** — aktuálně placeholder „dle rezervace"; SO menicka ukazuje víkendovou nabídku, takže možná otevřeno
+- [ ] **Rok otevření** v sekci O nás — placeholder `[ROK]`
+- [ ] **Počet členů týmu** v O nás — placeholder `[X]+`
+- [ ] **Google Maps embed** — momentálně search-based iframe, případně vyměnit za přesný embed s API klíčem
+- [ ] **Recenze** — aktuálně fiktivní; nahradit reálnými z Google
+- [ ] **Hodnocení 4,2 / 708 recenzí** — z aktuálního Google profilu, ověřit
+- [ ] **Kompletní jídelní lístek** — momentálně 3–4 vzorová jídla v každé kategorii, doplnit dle reality
+- [ ] **Formulář v salónku** — aktuálně `action="#"`, napojit na FormSpree / Web3Forms / vlastní backend
+- [ ] **Fotka personálu** — aktuálně sekce O nás používá `vstup.webp`, ideálně doplnit fotku týmu/kuchyně
+- [ ] **Vlastní doména** — pokud klient pořídí (např. `restaurantnet.cz`), nakonfigurovat ve Vercelu: Settings → Domains
