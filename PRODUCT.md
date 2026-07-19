@@ -18,7 +18,7 @@ Tři slova: **autentický** (skutečné jídlo, skutečný interiér), **pohosti
 
 ## Anti-references
 
-- Malované / ilustrované / stylizované obrazy jídla či interiéru — klient je výslovně odmítl (07/2026). Fotorealistická AI generace je povolena po schválení klientem (hero video 07/2026); vždy musí působit jako skutečný záběr a odpovídat skutečné nabídce.
+- AI-generované / malované / ilustrované obrazy jídla či interiéru — klient je výslovně odmítl (07/2026). Pouze reálné fotografie a video z restaurace.
 - Folklorní ornamenty, skanzen, kroje, pergamen.
 - Tmavý celoplošný „moody" design — klient preferuje světlé, teplé ladění (dřívější tmavou verzi vrátil).
 - Šablonové restaurační weby: carousel, tři karty „Kvalita/Tradice/Čerstvost", neonová WhatsApp zelená.
