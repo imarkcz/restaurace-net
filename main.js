@@ -1,7 +1,7 @@
 /* ═══════════════════════════════════════════════════════════════
-   RESTAURANT NET — main.js (v5.5 signature pass)
-   Preloader · znaková typografie · WebGL video shader · Lenis ·
-   velocity marquee/skew · custom kurzor · footer opona
+   RESTAURANT NET — main.js (v5)
+   Lenis smooth-scroll · GSAP choreografie · maskované titulky ·
+   roztahující se hero video · marquee · magnetická tlačítka
    ═══════════════════════════════════════════════════════════════ */
 
 document.documentElement.classList.add('js');
@@ -13,23 +13,17 @@ if (!location.hash) window.scrollTo(0, 0);
 
 const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const FINE_POINTER = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-const MOBILE = window.matchMedia('(max-width: 900px)').matches;
 
 if (window.gsap) gsap.registerPlugin(ScrollTrigger);
 
-/* ─── Lenis smooth scroll + sdílená velocity ─────────────────────── */
+/* ─── Lenis smooth scroll ────────────────────────────────────────── */
 let lenis = null;
-let scrollVelocity = 0; // px/frame, kladná = dolů
-
 if (window.Lenis && window.gsap && !REDUCED) {
   lenis = new Lenis({
     duration: 1.1,
     easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
   });
-  lenis.on('scroll', e => {
-    scrollVelocity = e.velocity;
-    ScrollTrigger.update();
-  });
+  lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add(time => lenis.raf(time * 1000));
   gsap.ticker.lagSmoothing(0);
 }
@@ -51,87 +45,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     scrollToTarget(target);
   });
 });
-
-/* ─── Titulek: rozklad na slova a znaky ──────────────────────────── */
-function splitChars(lineEl) {
-  const text = lineEl.textContent;
-  lineEl.setAttribute('aria-hidden', 'true');
-  lineEl.textContent = '';
-  text.split(' ').forEach((word, wi, arr) => {
-    const w = document.createElement('span');
-    w.className = 'word';
-    for (const ch of word) {
-      const c = document.createElement('span');
-      c.className = 'ch';
-      c.textContent = ch;
-      w.appendChild(c);
-    }
-    lineEl.appendChild(w);
-    if (wi < arr.length - 1) lineEl.appendChild(document.createTextNode(' '));
-  });
-}
-
-const heroH1 = document.querySelector('.hero__headline');
-if (heroH1 && window.gsap && !REDUCED) {
-  heroH1.setAttribute('aria-label', heroH1.textContent.trim().replace(/\s+/g, ' '));
-  heroH1.querySelectorAll('.line').forEach(splitChars);
-  // řádky odkrýt (choreografii přebírají znaky), znaky schovat pod masku
-  gsap.set(heroH1.querySelectorAll('.line'), { y: 0 });
-  gsap.set('.hero__headline .ch', { yPercent: 120, rotate: 5 });
-}
-
-/* ─── Hero intro (spouští preloader) ─────────────────────────────── */
-function heroIntro() {
-  if (REDUCED || !window.gsap) return;
-  ScrollTrigger.refresh();
-  gsap.timeline()
-    .to('.hero__headline .ch', {
-      yPercent: 0,
-      rotate: 0,
-      duration: 1.25,
-      stagger: 0.022,
-      ease: 'expo.out',
-    })
-    .to('.hero .reveal', {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      stagger: 0.1,
-      ease: 'expo.out',
-    }, '-=0.95');
-}
-
-/* ─── Preloader ──────────────────────────────────────────────────── */
-const loader = document.getElementById('loader');
-if (!loader || REDUCED || !window.gsap) {
-  if (loader) loader.classList.add('is-done');
-  heroIntro();
-} else if (sessionStorage.getItem('loaderSeen')) {
-  gsap.timeline()
-    .to(loader, { yPercent: -100, duration: .65, ease: 'expo.inOut', delay: .1 })
-    .add(() => { loader.classList.add('is-done'); }, '-=0.3')
-    .add(heroIntro, '-=0.55');
-} else {
-  sessionStorage.setItem('loaderSeen', '1');
-  const count = document.getElementById('loaderCount');
-  const bar = document.getElementById('loaderBar');
-  const prog = { v: 0 };
-  gsap.timeline()
-    .to('.loader__name .line', { y: 0, duration: .9, ease: 'expo.out' }, 0.05)
-    .to(prog, {
-      v: 100,
-      duration: 1.25,
-      ease: 'power2.inOut',
-      onUpdate: () => {
-        count.textContent = Math.round(prog.v);
-        bar.style.transform = `scaleX(${prog.v / 100})`;
-      },
-    }, 0)
-    .to([count, bar, '.loader__name'], { opacity: 0, duration: .3, ease: 'power2.out' })
-    .to(loader, { yPercent: -100, duration: .85, ease: 'expo.inOut' }, '-=0.05')
-    .add(() => { loader.classList.add('is-done'); }, '-=0.35')
-    .add(heroIntro, '-=0.75');
-}
 
 /* ─── Navigace: scroll stav + hamburger + scroll-spy ─────────────── */
 const nav = document.getElementById('nav');
@@ -170,31 +83,19 @@ function setActiveLink() {
 window.addEventListener('scroll', setActiveLink, { passive: true });
 setActiveLink();
 
-/* ─── Dnešní datum + denní režim CTA ─────────────────────────────── */
+/* ─── Dnešní datum česky ─────────────────────────────────────────── */
 const dny = ['neděle', 'pondělí', 'úterý', 'středa', 'čtvrtek', 'pátek', 'sobota'];
-const dnyKratce = { 0: 'Ne', 1: 'Po', 2: 'Út', 3: 'St', 4: 'Čt', 5: 'Pá', 6: 'So' };
 const mesice = ['ledna', 'února', 'března', 'dubna', 'května', 'června',
   'července', 'srpna', 'září', 'října', 'listopadu', 'prosince'];
 const dnes = new Date();
 document.getElementById('todayDate').textContent =
   `${dny[dnes.getDay()]} ${dnes.getDate()}. ${mesice[dnes.getMonth()]} ${dnes.getFullYear()}`;
 
-// večer má přednost rezervace, přes den polední menu
-const hodina = dnes.getHours();
-if (hodina >= 15 || hodina < 5) {
-  const ctas = document.querySelectorAll('.hero__ctas .btn');
-  if (ctas.length === 2) {
-    ctas[0].classList.replace('btn--ink', 'btn--line');
-    ctas[1].classList.replace('btn--line', 'btn--ink');
-  }
-}
-
-/* ─── Polední menu: přepínání dnů + ghost písmena ────────────────── */
+/* ─── Polední menu: přepínání dnů ────────────────────────────────── */
 const weekly = document.getElementById('weeklyMenu');
 if (weekly) {
   const tabs = weekly.querySelectorAll('.daytab');
   const panels = weekly.querySelectorAll('.daypanel');
-  const ghost = document.getElementById('weeklyGhost');
 
   const activate = (day, animate = true) => {
     tabs.forEach(t => {
@@ -203,7 +104,6 @@ if (weekly) {
       t.setAttribute('aria-selected', active);
     });
     panels.forEach(p => p.classList.toggle('is-active', p.dataset.day === String(day)));
-    if (ghost) ghost.textContent = dnyKratce[day] || '';
 
     if (animate && !REDUCED && window.gsap) {
       const panel = weekly.querySelector(`.daypanel[data-day="${day}"]`);
@@ -211,7 +111,6 @@ if (weekly) {
       gsap.fromTo(items,
         { opacity: 0, y: 12 },
         { opacity: 1, y: 0, duration: .5, stagger: 0.03, ease: 'power3.out', overwrite: true, clearProps: 'all' });
-      if (ghost) gsap.fromTo(ghost, { opacity: 0, x: 60 }, { opacity: 1, x: 0, duration: .8, ease: 'expo.out' });
     }
   };
 
@@ -240,141 +139,28 @@ if (heroVideo) {
   });
 }
 
-/* ═══ WebGL: video jako živý shader ══════════════════════════════ */
-(function heroWebGL() {
-  if (REDUCED || MOBILE || !window.THREE || !heroVideo) return;
-  const canvas = document.getElementById('heroGl');
-  const clip = document.getElementById('heroClip');
-  if (!canvas || !clip) return;
-
-  let renderer;
-  try {
-    renderer = new THREE.WebGLRenderer({ canvas, antialias: false });
-  } catch (e) { return; }
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-
-  const texture = new THREE.VideoTexture(heroVideo);
-  texture.minFilter = THREE.LinearFilter;
-  texture.magFilter = THREE.LinearFilter;
-
-  const uniforms = {
-    uTex: { value: texture },
-    uTime: { value: 0 },
-    uMouse: { value: new THREE.Vector2(0.5, 0.5) },
-    uHover: { value: 0 },
-    uVel: { value: 0 },
-    uCover: { value: new THREE.Vector4(1, 1, 0, 0) }, // scale.xy, offset.xy
-  };
-
-  const material = new THREE.ShaderMaterial({
-    uniforms,
-    vertexShader: `
-      varying vec2 vUv;
-      void main() {
-        vUv = uv;
-        gl_Position = vec4(position, 1.0);
-      }`,
-    fragmentShader: `
-      precision highp float;
-      varying vec2 vUv;
-      uniform sampler2D uTex;
-      uniform float uTime;
-      uniform vec2 uMouse;
-      uniform float uHover;
-      uniform float uVel;
-      uniform vec4 uCover;
-
-      void main() {
-        vec2 uv = vUv;
-
-        // dýchání obrazu — pomalé, sotva viditelné vlnění
-        uv += 0.0035 * vec2(
-          sin(uv.y * 9.0 + uTime * 0.55),
-          cos(uv.x * 8.0 + uTime * 0.45)
-        );
-
-        // kruhová vlna kolem myši
-        float d = distance(uv, uMouse);
-        float ripple = exp(-d * 14.0) * 0.018 * uHover;
-        uv += normalize(uv - uMouse + 0.0001) * ripple
-            + 0.006 * uHover * exp(-d * 10.0) * vec2(
-                sin(d * 40.0 - uTime * 3.0),
-                cos(d * 40.0 - uTime * 3.0));
-
-        // object-fit: cover
-        vec2 cuv = uv * uCover.xy + uCover.zw;
-
-        // RGB posun podle rychlosti scrollu
-        float shift = clamp(uVel, -1.0, 1.0) * 0.006;
-        float r = texture2D(uTex, cuv + vec2(0.0,  shift)).r;
-        float g = texture2D(uTex, cuv).g;
-        float b = texture2D(uTex, cuv - vec2(0.0,  shift)).b;
-
-        gl_FragColor = vec4(r, g, b, 1.0);
-      }`,
-  });
-
-  scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material));
-
-  const VIDEO_AR = 1280 / 960;
-  function resize() {
-    const w = clip.clientWidth, h = clip.clientHeight;
-    renderer.setSize(w, h, false);
-    const canvasAR = w / h;
-    // cover: ořízni delší stranu
-    if (canvasAR > VIDEO_AR) {
-      const s = VIDEO_AR / canvasAR;
-      uniforms.uCover.value.set(1, s, 0, (1 - s) / 2);
-    } else {
-      const s = canvasAR / VIDEO_AR;
-      uniforms.uCover.value.set(s, 1, (1 - s) / 2, 0);
-    }
-  }
-  addEventListener('resize', resize);
-  resize();
-
-  const mouseTarget = new THREE.Vector2(0.5, 0.5);
-  let hoverTarget = 0;
-  clip.addEventListener('pointermove', e => {
-    const r = clip.getBoundingClientRect();
-    mouseTarget.set((e.clientX - r.left) / r.width, 1 - (e.clientY - r.top) / r.height);
-    hoverTarget = 1;
-  });
-  clip.addEventListener('pointerleave', () => { hoverTarget = 0; });
-
-  let running = true;
-  new IntersectionObserver(([entry]) => {
-    running = entry.isIntersecting;
-    if (running) requestAnimationFrame(tick);
-  }, { threshold: 0 }).observe(canvas);
-
-  const clock = new THREE.Clock();
-  function tick() {
-    if (!running || document.hidden) return;
-    uniforms.uTime.value = clock.getElapsedTime();
-    uniforms.uMouse.value.lerp(mouseTarget, 0.07);
-    uniforms.uHover.value += (hoverTarget - uniforms.uHover.value) * 0.06;
-    uniforms.uVel.value += (scrollVelocity / 30 - uniforms.uVel.value) * 0.1;
-    renderer.render(scene, camera);
-    requestAnimationFrame(tick);
-  }
-  document.addEventListener('visibilitychange', () => {
-    if (!document.hidden && running) requestAnimationFrame(tick);
-  });
-
-  clip.classList.add('has-gl');
-  requestAnimationFrame(tick);
-})();
-
-/* ═══ GSAP scroll choreografie ═══════════════════════════════════ */
+/* ═══ GSAP choreografie ══════════════════════════════════════════ */
 if (window.gsap && !REDUCED) {
 
-  /* reveal — vstupy sekcí (hero řeší intro) */
+  /* hero: maskované řádky titulku + meta/sub/cta */
+  gsap.timeline({ delay: 0.15 })
+    .to('.hero .mask .line', {
+      y: 0,
+      duration: 1.3,
+      stagger: 0.12,
+      ease: 'expo.out',
+    })
+    .to('.hero .reveal', {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      stagger: 0.1,
+      ease: 'expo.out',
+    }, '-=0.9');
+
+  /* reveal — vstupy sekcí */
   gsap.utils.toArray('.reveal').forEach(el => {
-    if (el.closest('.hero')) return;
+    if (el.closest('.hero')) return; // hero řeší timeline výše
     gsap.to(el, {
       opacity: 1,
       y: 0,
@@ -382,18 +168,6 @@ if (window.gsap && !REDUCED) {
       ease: 'expo.out',
       scrollTrigger: { trigger: el, start: 'top 88%', once: true },
     });
-  });
-
-  /* řádky titulku se při scrollu smýkají od sebe */
-  gsap.to('.hero__headline .mask:nth-child(1)', {
-    x: '-5vw',
-    ease: 'none',
-    scrollTrigger: { trigger: '.hero', start: 'top top', end: '60% top', scrub: true },
-  });
-  gsap.to('.hero__headline .mask:nth-child(2)', {
-    x: '5vw',
-    ease: 'none',
-    scrollTrigger: { trigger: '.hero', start: 'top top', end: '60% top', scrub: true },
   });
 
   /* hero video se roztáhne na plnou šířku */
@@ -406,7 +180,12 @@ if (window.gsap && !REDUCED) {
         {
           clipPath: 'inset(0% 0% round 0px)',
           ease: 'none',
-          scrollTrigger: { trigger: '#heroMedia', start: 'top 78%', end: 'top 12%', scrub: 0.5 },
+          scrollTrigger: {
+            trigger: '#heroMedia',
+            start: 'top 78%',
+            end: 'top 12%',
+            scrub: 0.5,
+          },
         });
       return () => { tween.scrollTrigger && tween.scrollTrigger.kill(); tween.kill(); };
     });
@@ -416,13 +195,18 @@ if (window.gsap && !REDUCED) {
         {
           clipPath: 'inset(0% 0% round 0px)',
           ease: 'none',
-          scrollTrigger: { trigger: '#heroMedia', start: 'top 80%', end: 'top 20%', scrub: 0.5 },
+          scrollTrigger: {
+            trigger: '#heroMedia',
+            start: 'top 80%',
+            end: 'top 20%',
+            scrub: 0.5,
+          },
         });
       return () => { tween.scrollTrigger && tween.scrollTrigger.kill(); tween.kill(); };
     });
   }
 
-  /* fotky — vnitřní parallax + skew podle setrvačnosti */
+  /* fotky — jemný vnitřní parallax */
   gsap.utils.toArray('[data-parallax]').forEach(img => {
     gsap.fromTo(img, { yPercent: -5, scale: 1.12 }, {
       yPercent: 5,
@@ -437,26 +221,12 @@ if (window.gsap && !REDUCED) {
     });
   });
 
-  const photos = gsap.utils.toArray('.photo');
-  if (photos.length) {
-    const skewSetters = photos.map(p => gsap.quickTo(p, 'skewY', { duration: 0.4, ease: 'power2.out' }));
-    gsap.ticker.add(() => {
-      const skew = gsap.utils.clamp(-3.5, 3.5, scrollVelocity / 22);
-      skewSetters.forEach(set => set(skew));
-    });
-  }
-
-  /* marquee — rychlost i směr řídí scroll */
+  /* marquee — nekonečný pás */
   const track = document.getElementById('marqueeTrack');
   if (track) {
     const part = track.querySelector('.marquee__part');
     for (let i = 0; i < 3; i++) track.appendChild(part.cloneNode(true));
-    const loop = gsap.to(track, { xPercent: -25, duration: 22, ease: 'none', repeat: -1 });
-    gsap.ticker.add(() => {
-      const target = gsap.utils.clamp(-4, 4,
-        1 + scrollVelocity / 12) || 1;
-      loop.timeScale(gsap.utils.interpolate(loop.timeScale(), target, 0.08));
-    });
+    gsap.to(track, { xPercent: -25, duration: 22, ease: 'none', repeat: -1 });
   }
 
   /* čísla ve faktech */
@@ -470,60 +240,6 @@ if (window.gsap && !REDUCED) {
       onUpdate: () => { el.textContent = Math.round(obj.v); },
       scrollTrigger: { trigger: el, start: 'top 88%', once: true },
     });
-  });
-}
-
-/* ─── Footer opona ───────────────────────────────────────────────── */
-(function footerCurtain() {
-  if (REDUCED) return;
-  const footer = document.querySelector('.footer');
-  const main = document.querySelector('main');
-  if (!footer || !main) return;
-
-  function apply() {
-    const h = footer.offsetHeight;
-    if (h < innerHeight * 0.92) {
-      document.documentElement.classList.add('footer-fx');
-      main.style.marginBottom = h + 'px';
-    } else {
-      document.documentElement.classList.remove('footer-fx');
-      main.style.marginBottom = '';
-    }
-    if (window.ScrollTrigger) ScrollTrigger.refresh();
-  }
-  // až po fontech, ať sedí výška
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(apply);
-  else apply();
-  addEventListener('resize', apply);
-})();
-
-/* ─── Custom kurzor ──────────────────────────────────────────────── */
-if (FINE_POINTER && !REDUCED && window.gsap) {
-  const dot = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
-  document.documentElement.classList.add('has-cursor');
-
-  const dotX = gsap.quickTo(dot, 'x', { duration: 0.08, ease: 'power2.out' });
-  const dotY = gsap.quickTo(dot, 'y', { duration: 0.08, ease: 'power2.out' });
-  const ringX = gsap.quickTo(ring, 'x', { duration: 0.35, ease: 'power3.out' });
-  const ringY = gsap.quickTo(ring, 'y', { duration: 0.35, ease: 'power3.out' });
-
-  let shown = false;
-  addEventListener('pointermove', e => {
-    if (!shown) { shown = true; gsap.to([dot, ring], { opacity: 1, duration: .3 }); }
-    dotX(e.clientX); dotY(e.clientY);
-    ringX(e.clientX); ringY(e.clientY);
-  }, { passive: true });
-  document.addEventListener('mouseleave', () => {
-    shown = false;
-    gsap.to([dot, ring], { opacity: 0, duration: .3 });
-  });
-
-  const grow = () => gsap.to(ring, { scale: 1.9, duration: .35, ease: 'power3.out' });
-  const shrink = () => gsap.to(ring, { scale: 1, duration: .35, ease: 'power3.out' });
-  document.querySelectorAll('a, button, .daytab, input, textarea, label').forEach(el => {
-    el.addEventListener('pointerenter', grow);
-    el.addEventListener('pointerleave', shrink);
   });
 }
 

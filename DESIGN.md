@@ -28,22 +28,17 @@ Světlý, teplý, vzdušný. Kostěná/krémová plocha, inkoustový text, jeden
 
 **Pouze reálné materiály z restaurace**: `images/hero.webm|mp4` (záběry jídla), `salonek.webp`, `vstup.webp`. Zákaz AI-generovaných a ilustrovaných obrazů (rozhodnutí klienta 07/2026). Fotky v zaoblených rámech (`--radius: 20px`), jemný vnitřní parallax.
 
-## Motion (main.js) — signature vrstva v5.5
+## Motion (main.js)
 
-- **Preloader**: ink závoj, Gloock counter 0–100 + paprika progress bar, opona nahoru; opakovaná návštěva v session jen krátké zvednutí.
-- **Lenis** smooth-scroll napojený na GSAP ticker; `e.velocity` je sdílená pro reaktivní efekty.
-- Hero titulek: rozpad na **znaky** (word > ch), kaskádový nástup s rotací; při scrollu se řádky smýkají od sebe (±5vw scrub).
-- **Hero video = WebGL shader** (Three.js VideoTexture + custom GLSL): jemné „dýchání" obrazu, ripple za myší, RGB posun podle rychlosti scrollu. Jen desktop, fallback čisté video.
-- Hero video okno: `clip-path: inset()` scrub na full-bleed.
-- Marquee: nekonečný pás, **timeScale řízený rychlostí a směrem scrollu** (couvá při scrollu nahoru).
-- Fotky: parallax scrub + `skewY` podle setrvačnosti scrollu (±3,5°).
-- Menu: obří ghost zkratka dne (Gloock outline) za panelem, mění se s tabem.
-- **Footer opona**: footer fixed za obsahem, main s marginem ho odhaluje.
-- **Custom kurzor**: tečka + zpožděný kroužek, `mix-blend-difference`, roste nad interaktivními prvky. Jen fine pointer.
-- Magnetická tlačítka `[data-magnetic]`, čísla faktů se dopočítávají.
-- Denní režim: po 15. hodině je primární CTA „Rezervovat salónek" místo „Dnešní menu".
+- **Lenis** smooth-scroll napojený na GSAP ticker.
+- Hero: maskované řádky titulku (`.mask > .line`, yPercent reveal, expo.out).
+- Hero video: `clip-path: inset()` scrub — z vloženého okna na full-bleed.
+- Marquee: nekonečný pás (xPercent loop, 22 s).
+- `.reveal`: fade-up při vstupu (once), fotky `[data-parallax]` scrub.
+- Magnetická tlačítka `[data-magnetic]` (±14 px, jen fine pointer).
+- Čísla faktů se dopočítávají při odhalení.
 - Easing: expo.out / power3.out; **žádný** linear (mimo scrub), bounce ani elastic.
-- `prefers-reduced-motion`: loader, kurzor, WebGL, marquee i scruby vypnuté, video pauznuté.
+- `prefers-reduced-motion`: vše statické, video pauznuté.
 
 ## Components
 

@@ -14,17 +14,6 @@
 </head>
 <body>
 
-  <!-- ═══ PRELOADER ═══ -->
-  <div class="loader" id="loader" aria-hidden="true">
-    <p class="loader__name"><span class="mask"><span class="line">Restaurant NET</span></span></p>
-    <p class="loader__count" id="loaderCount">0</p>
-    <span class="loader__bar" id="loaderBar"></span>
-  </div>
-
-  <!-- ═══ CUSTOM KURZOR ═══ -->
-  <div class="cursor" id="cursor" aria-hidden="true"></div>
-  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
-
   <!-- ═══ NAVIGACE ═══ -->
   <header class="nav" id="nav">
     <div class="nav__inner">
@@ -75,7 +64,6 @@
 
       <div class="hero__media" id="heroMedia">
         <div class="hero__media-clip" id="heroClip">
-          <canvas class="hero__gl" id="heroGl" aria-hidden="true"></canvas>
           <video
             id="heroVideo"
             poster="images/salonek.webp"
@@ -107,7 +95,6 @@
         </header>
 
         <div class="weekly" id="weeklyMenu">
-          <p class="weekly__ghost" id="weeklyGhost" aria-hidden="true">Čt</p>
           <div class="daytabs reveal" role="tablist" aria-label="Dny v týdnu">
             <button class="daytab" data-day="3" role="tab">St <span>6.5.</span></button>
             <button class="daytab" data-day="4" role="tab">Čt <span>7.5.</span></button>
@@ -433,7 +420,6 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.min.js"></script>
   <script src="main.js"></script>
 </body>
 </html>
